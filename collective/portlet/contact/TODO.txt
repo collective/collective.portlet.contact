@@ -3,5 +3,7 @@ TODO
 
 * Add tests !!!
 
+* The "uninstall" GS profile
+
 * Add an utility "Current author" which display informations about the current 
   document's author (based on the context).
