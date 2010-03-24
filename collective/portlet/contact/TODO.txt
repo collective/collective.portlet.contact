@@ -1,6 +1,10 @@
 TODO
 ============
 
+* LDAP backend
+  - Add explicit error messages if the ldap server is down, ...
+  - Add some configuration examples in the backend config form.
+
 * Add tests !!!
 
 * The "uninstall" GS profile
