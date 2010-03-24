@@ -1,0 +1,38 @@
+<configure 
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  xmlns:zcml="http://namespaces.zope.org/zcml"
+  i18n_domain="collective.portlet.contact">
+
+  <browser:resourceDirectory
+      name="collective-portlet-contact"
+      directory="static"
+      permission="zope2.Public"
+      />
+
+  <!-- Main control-panel page -->
+  <adapter factory=".controlpanel.PortletContactControlPanelAdapter" />  
+  <browser:page
+      name="cpc-controlpanel"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.PortletContactControlPanel"
+      permission="cmf.ManagePortal"
+      />
+
+  <!-- Only a plone manager can access to the search view -->
+  <browser:view
+      for="*"
+      name="cpc-search"
+      permission="cmf.ModifyPortalContent"
+      class=".searcher.ContactSearchView"
+    />
+
+  <!-- DUMMY utility and control-panel page -->
+  <include package=".dummy" />
+		   
+  <!-- LDAP utility and control-panel page -->
+  <include package=".ldap"
+           zcml:condition="installed ldap" />
+
+</configure>
+

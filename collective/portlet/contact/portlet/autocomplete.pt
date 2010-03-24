@@ -1,0 +1,25 @@
+
+<link type="text/css" href="++resource++collective-portlet-contact/jquery.autocomplete.css" rel="stylesheet">
+<script src="++resource++collective-portlet-contact/jquery.bgiframe.min.js" type="text/javascript"></script>
+<script src="++resource++collective-portlet-contact/jquery.autocomplete.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+jq(document).ready(function() {
+    jq("div[id='formfield-form-contact_id']").css('display', 'none');
+    jq("input[name='form.contact']").autocomplete(portal_url + '/@@cpc-search/search');
+    jq("input[name='form.contact']").flushCache();
+    jq("input[name='form.contact']").result(function(event, data, formatted) {
+        var elem = document.getElementById('form.contact_id');
+        if (elem) {
+            if (data) {
+                var value = data[1];
+                elem.value = value;
+            }
+            else {
+                elem.value = '';
+            }
+        } 
+    });
+});
+</script>

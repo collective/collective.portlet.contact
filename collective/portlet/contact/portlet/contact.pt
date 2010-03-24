@@ -1,0 +1,21 @@
+<dl tal:attributes="class string:portlet collectivePortletContact"
+    i18n:domain="collective.portlet.contact">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <span tal:content="view/data/header"> header </span>
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <dd class="portletItem odd" tal:define="contact view/getContactInfo">
+        <div id="fullname"
+             tal:content="structure python:contact['fullname']" />
+        <div id="employeetype"
+             tal:content="structure python:contact['employeetype']" />
+        <div id="mail"
+             tal:content="structure python:contact['mail']" />
+        <div id="phonenumber"
+             tal:content="structure python:contact['phonenumber']" />
+    </dd>
+
+</dl>

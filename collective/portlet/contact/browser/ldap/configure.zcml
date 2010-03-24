@@ -1,0 +1,23 @@
+<configure 
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  xmlns:zcml="http://namespaces.zope.org/zcml"
+  i18n_domain="collective.portlet.contact">
+
+  <!-- LDAP utility -->
+  <utility
+     component=".utility.PortletContactLdap"
+     name="ldap" />
+
+  <!-- LDAP control-panel page
+       !!! The vue name must be cpc-controlpanel-[back-end] -->
+  <adapter factory=".controlpanel.PortletContactLdapControlPanelAdapter" />
+  <browser:page
+      name="cpc-controlpanel-ldap"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.PortletContactLdapControlPanel"
+      permission="cmf.ManagePortal"
+      />
+
+</configure>
+

@@ -1,0 +1,37 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.portlet.contact">
+
+  <i18n:registerTranslations directory="locales" />
+
+  <include package="plone.app.portlets" />
+  <include package=".browser" />
+  <include package=".portlet" />
+
+  <utility
+    provides="zope.schema.interfaces.IVocabularyFactory"
+    component=".vocabularies.PortletContactUtilities"
+    name="collective.portlet.contact.utilities"
+    />
+
+  <!-- Register the installation GenericSetup extension profile -->
+  <genericsetup:registerProfile
+      name="default"
+      title="collective.portlet.contact default profile"
+      directory="profiles/default"
+      description="collective.portlet.contact default profile"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <!-- Register the uninstall GenericSetup extension profile -->
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="collective.portlet.contact uninstall profile"
+      directory="profiles/uninstall"
+      description="collective.portlet.contact uninstall profile"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+	  
+</configure>

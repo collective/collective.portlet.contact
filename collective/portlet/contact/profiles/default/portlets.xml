@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<portlets
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="plone">
+ 
+  <!-- Portlet type registrations -->
+ 
+  <portlet
+    addview="collective.portlet.contact.Contact"
+    title="Contact portlet"
+    description="A portlet which displays the result of a contact query"
+    i18n:attributes="title title_contact_portlet;
+                     description description_contact_portlet">
+    <for interface="plone.app.portlets.interfaces.IColumn" />
+  </portlet>
+
+ 
+</portlets>

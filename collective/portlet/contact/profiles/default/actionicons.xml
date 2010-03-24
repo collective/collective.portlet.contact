@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<action-icons>
+ <action-icon category="controlpanel" 
+              action_id="collective-portlet-contact" 
+			  title="collective.portlet.contact" 
+			  priority="0" 
+			  icon_expr="++resource++collective-portlet-contact/contact.gif" />
+</action-icons>

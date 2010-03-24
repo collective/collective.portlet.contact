@@ -1,0 +1,23 @@
+<configure 
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  xmlns:zcml="http://namespaces.zope.org/zcml"
+  i18n_domain="collective.portlet.contact">
+
+  <!-- DUMMY utility -->
+  <utility
+     component=".utility.PortletContactDummy"
+     name="dummy" />
+
+  <!-- DUMMY control-panel page
+       !!! The vue name must be cpc-controlpanel-[back-end] -->
+  <adapter factory=".controlpanel.PortletContactDummyControlPanelAdapter" />
+  <browser:page
+      name="cpc-controlpanel-dummy"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.PortletContactDummyControlPanel"
+      permission="cmf.ManagePortal"
+      />
+
+</configure>
+
