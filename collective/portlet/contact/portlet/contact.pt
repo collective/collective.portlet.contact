@@ -1,5 +1,7 @@
 <dl tal:attributes="class string:portlet collectivePortletContact"
-    i18n:domain="collective.portlet.contact">
+    i18n:domain="collective.portlet.contact"
+    tal:define="contact view/getContactInfo"
+	tal:condition="python:contact is not None">
 
     <dt class="portletHeader">
         <span class="portletTopLeft"></span>
@@ -7,7 +9,7 @@
         <span class="portletTopRight"></span>
     </dt>
 
-    <dd class="portletItem odd" tal:define="contact view/getContactInfo">
+    <dd class="portletItem odd">
         <div id="fullname"
              tal:content="structure python:contact['fullname']" />
         <div id="employeetype"
