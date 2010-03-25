@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-03-25 09:53+0000\n"
+"POT-Creation-Date: 2010-03-25 11:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Contact uniq id"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:67
+#: ./browser/ldap/jpegPhoto.py:70
 msgid "Contact's photo form ${cn}"
 msgstr ""
 
@@ -65,7 +65,7 @@ msgstr ""
 msgid "Full name"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:79
+#: ./browser/ldap/jpegPhoto.py:82
 msgid "Is not a JPEG"
 msgstr ""
 
@@ -81,7 +81,7 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:50
+#: ./browser/ldap/jpegPhoto.py:53
 msgid "Photo"
 msgstr ""
 
@@ -113,11 +113,15 @@ msgstr ""
 msgid "Select the back-end for the Contact portlets."
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:92
+#: ./browser/ldap/jpegPhoto.py:93
 msgid "The LDAP authentication credentials are invalid"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:88
+#: ./browser/ldap/jpegPhoto.py:101
+msgid "The LDAP credentials provided has not the modify permission."
+msgstr ""
+
+#: ./browser/ldap/jpegPhoto.py:89
 msgid "The LDAP server is unreacheable"
 msgstr ""
 
@@ -129,15 +133,15 @@ msgstr ""
 msgid "The contact uniq id."
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:96
+#: ./browser/ldap/jpegPhoto.py:97
 msgid "The entry you have specified is not in the LDAP"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:99
+#: ./browser/ldap/jpegPhoto.py:104
 msgid "The photo has been well upladed"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:56
+#: ./browser/ldap/jpegPhoto.py:59
 msgid "The unique ID of the ldap entry."
 msgstr ""
 
@@ -145,15 +149,15 @@ msgstr ""
 msgid "Title of the rendered portlet"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:55
+#: ./browser/ldap/jpegPhoto.py:58
 msgid "Unique ID"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:69
+#: ./browser/ldap/jpegPhoto.py:72
 msgid "Upload"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:51
+#: ./browser/ldap/jpegPhoto.py:54
 msgid "Upload a jpeg photo."
 msgstr ""
 

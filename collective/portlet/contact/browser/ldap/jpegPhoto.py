@@ -1,7 +1,10 @@
 from collective.portlet.contact.interfaces import IPortletContactUtility
 from collective.portlet.contact.browser.ldap import utils
 from collective.portlet.contact.i18n import MessageFactory as _
+from collective.portlet.contact.utils import getPropertySheet
+from collective.portlet.contact.browser.ldap.utils import LdapServer
 import ldap
+from ldap import modlist
 
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
@@ -77,23 +80,25 @@ class Form(form.Form):
         if content_type != 'image/jpeg':
             raise form.interfaces.WidgetActionExecutionError(
                    'photo', interface.Invalid(_(u'Is not a JPEG')))
-        config = self.getLDAPConfig()
-        dn = 'uid=%s,%s'%(data['uid'], config['basedn'])
         #try to set the photo to the contact
         try:
-            utils.setPhoto(dn, photo, config)
-        except utils.ldap.SERVER_DOWN:
+            setPhoto(self.context, data['uid'], photo)
+        except ldap.SERVER_DOWN:
             raise form.interfaces.ActionExecutionError(
                     interface.Invalid(
                     _("The LDAP server is unreacheable")))
-        except utils.ldap.INVALID_CREDENTIALS:
+        except ldap.INVALID_CREDENTIALS:
             raise form.interfaces.ActionExecutionError(
                     interface.Invalid(
                     _("The LDAP authentication credentials are invalid")))
-        except utils.ldap.NO_SUCH_OBJECT:
+        except ldap.NO_SUCH_OBJECT:
             raise form.interfaces.ActionExecutionError(
                     interface.Invalid(
                     _("The entry you have specified is not in the LDAP")))
+        except ldap.INSUFFICIENT_ACCESS:
+            raise form.interfaces.ActionExecutionError(
+                    interface.Invalid(
+                    _("The LDAP credentials provided has not the modify permission.")))
 
         IStatusMessage(self.request).addStatusMessage(
                                       _(u"The photo has been well upladed"))
@@ -105,29 +110,40 @@ class Form(form.Form):
 
     def getLDAPConfig(self):
         config = {}
-        pp = getPropertySheet(context)
-        config['server'] = '%s:%s'%(pp.ldap_server_host,pp.ldap_server_port)
+        pp = getPropertySheet(self.context)
+        config['host'] = pp.ldap_server_host
+        config['port'] = pp.ldap_server_port
         config['user'] = pp.ldap_bind_dn
         config['password'] = pp.ldap_bind_password
-        config['basedn'] = pp.ldap_bind_password
-
+        config['basedn'] = pp.ldap_search_base
+        if pp.ldap_search_recursive:
+            config['scope'] = ldap.SCOPE_SUBTREE
+        else:
+            config['scope'] = ldap.SCOPE_ONELEVEL
         return config
 
 class Page(layout.FormWrapper):
 
     form = Form
 
-def setPhoto(dn, photo, ldapconfig):
-    server = ldap.initialize(ldapconfig['server']) #'ldap://ldapmaster.makina-corpus.net:389')
-    user = ldapconfig['user'] #"uid=jmf,ou=People,dc=mcjam,dc=org"
-    pwd = ldapconfig['password']
+def setPhoto(context, uid , photo):
+    props = getPropertySheet(context)
 
-    server.simple_bind_s(user, pwd)
+    if props.ldap_search_recursive:
+        SCOPE = ldap.SCOPE_SUBTREE
+    else:
+        SCOPE = ldap.SCOPE_ONELEVEL
+        
+    server = LdapServer(props.ldap_server_host,
+                        props.ldap_server_port,
+                        props.ldap_bind_dn,
+                        props.ldap_bind_password,
+                        props.ldap_search_base,
+                        SCOPE)
+    server.connect()
+    entries = server.search('uid', uid, attrs=['jpegPhoto'])
 
-    entry = server.search_s(dn, ldap.SCOPE_BASE)
-    #get the photo:
-
-    contact = entry[0][1]
+    contact = entries[0]['datas']
     old_photo = contact.get('jpegPhoto')
     if old_photo:
         old_photo = old_photo[0]
@@ -137,6 +153,5 @@ def setPhoto(dn, photo, ldapconfig):
     new = {'jpegPhoto':photo}
 
     ldif = modlist.modifyModlist(old,new)
-    server.modify_s(user,ldif)
-
-    server.unbind_s()
+    server.l.modify_s(entries[0]['path'],ldif)
+    server.close()

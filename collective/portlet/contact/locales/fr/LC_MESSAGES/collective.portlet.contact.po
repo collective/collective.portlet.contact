@@ -49,7 +49,7 @@ msgstr "Contact"
 msgid "Contact uniq id"
 msgstr "Identifiant unique du contact"
 
-#: ./browser/ldap/jpegPhoto.py:67
+#: ./browser/ldap/jpegPhoto.py:70
 msgid "Contact's photo form ${cn}"
 msgstr "Formulaire de téléchargement de la photo de ${cn}"
 
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Full name"
 msgstr "Nom affiché (complet)"
 
-#: ./browser/ldap/jpegPhoto.py:79
+#: ./browser/ldap/jpegPhoto.py:82
 msgid "Is not a JPEG"
 msgstr "N'est pas un format JPEG"
 
@@ -77,7 +77,7 @@ msgstr "Aucun changement n'a été fait."
 msgid "Phone"
 msgstr "Téléphone"
 
-#: ./browser/ldap/jpegPhoto.py:50
+#: ./browser/ldap/jpegPhoto.py:53
 msgid "Photo"
 msgstr "Photo"
 
@@ -109,11 +109,15 @@ msgstr "Sélectionnez un support de données"
 msgid "Select the back-end for the Contact portlets."
 msgstr "Sélectionnez le support de données pour les portlets contact."
 
-#: ./browser/ldap/jpegPhoto.py:92
+#: ./browser/ldap/jpegPhoto.py:93
 msgid "The LDAP authentication credentials are invalid"
 msgstr "L'identifiant ou le mot de passe nécessaire pour se connecter au serveur LDAP est invalide."
 
-#: ./browser/ldap/jpegPhoto.py:88
+#: ./browser/ldap/jpegPhoto.py:101
+msgid "The LDAP credentials provided has not the modify permission."
+msgstr "L'identifiant de connexion au serveur LDAP ne permet pas la modification des données sur ce contact."
+
+#: ./browser/ldap/jpegPhoto.py:89
 msgid "The LDAP server is unreacheable"
 msgstr "Le serveur LDAP n'est pas joignable. Merci de contacter l'administrateur."
 
@@ -125,15 +129,15 @@ msgstr "Le contact à afficher"
 msgid "The contact uniq id."
 msgstr "L'identifiant unique du contact"
 
-#: ./browser/ldap/jpegPhoto.py:96
+#: ./browser/ldap/jpegPhoto.py:97
 msgid "The entry you have specified is not in the LDAP"
 msgstr "L'entrée que vous avez spécifiée n'est pas dans le serveur LDAP"
 
-#: ./browser/ldap/jpegPhoto.py:99
+#: ./browser/ldap/jpegPhoto.py:104
 msgid "The photo has been well upladed"
 msgstr "La photo a correctement été téléchargée et ajoutée au contact demandé."
 
-#: ./browser/ldap/jpegPhoto.py:56
+#: ./browser/ldap/jpegPhoto.py:59
 msgid "The unique ID of the ldap entry."
 msgstr "L'identifiant unique d'une entrée dans le serveur LDAP"
 
@@ -141,15 +145,15 @@ msgstr "L'identifiant unique d'une entrée dans le serveur LDAP"
 msgid "Title of the rendered portlet"
 msgstr "Titre de la portlet"
 
-#: ./browser/ldap/jpegPhoto.py:55
+#: ./browser/ldap/jpegPhoto.py:58
 msgid "Unique ID"
 msgstr "Identifiant unique"
 
-#: ./browser/ldap/jpegPhoto.py:69
+#: ./browser/ldap/jpegPhoto.py:72
 msgid "Upload"
 msgstr "Télécharger"
 
-#: ./browser/ldap/jpegPhoto.py:51
+#: ./browser/ldap/jpegPhoto.py:54
 msgid "Upload a jpeg photo."
 msgstr "Téléchargez une photo au format JPG"
 
@@ -237,3 +241,4 @@ msgstr "Ajouter une portlet contact"
 #: ./portlet/contact.py:120
 msgid "title_edit_contact_portlet"
 msgstr "Modifier la portlet contact"
+
