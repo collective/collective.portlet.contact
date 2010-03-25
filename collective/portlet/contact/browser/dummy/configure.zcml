@@ -6,7 +6,7 @@
 
   <!-- DUMMY utility -->
   <utility
-     component=".utility.PortletContactDummy"
+     component=".utility.portletContactDummy"
      name="dummy" />
 
   <!-- DUMMY control-panel page

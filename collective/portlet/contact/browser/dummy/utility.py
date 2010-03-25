@@ -28,4 +28,7 @@ class PortletContactDummy:
                 'phonenumber': props.dummy_phone,
                 'mail': encode_email(props.dummy_mail,
                                      props.dummy_mail),
-                'employeetype': props.dummy_employee_type}
+                'employeetype': props.dummy_employee_type,
+                'photourl': props.dummy_photo_url}
+
+portletContactDummy = PortletContactDummy()

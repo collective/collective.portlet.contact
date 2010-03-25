@@ -80,7 +80,7 @@ class Renderer(base.Renderer):
     def getContactInfo(self):
         """ get the contact informations the portlet is pointing to"""
         uniq_id = self.data.contact_id
-        utility = getPortletContactUtility(self.context)()
+        utility = getPortletContactUtility(self.context)
         return utility.getContactInfos(self.context, uniq_id)
 
 class AddForm(base.AddForm):

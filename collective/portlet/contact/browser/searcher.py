@@ -23,7 +23,7 @@ class ContactSearchView(BrowserView):
         # in configure.zcml for this browser view.
         portal_membership = getToolByName(context, 'portal_membership')
         if portal_membership.checkPermission(ModifyPortalContent, context):
-            utility = getPortletContactUtility(context)()
+            utility = getPortletContactUtility(context)
             return utility.search(context, q=q, limit=limit)
         else:
             raise Unauthorized

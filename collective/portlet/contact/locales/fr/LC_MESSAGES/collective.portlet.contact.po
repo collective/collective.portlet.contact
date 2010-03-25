@@ -1,0 +1,239 @@
+# French translations for collective.portlet.contact package
+# Traductions françaises du paquet collective.portlet.contact.
+# Sylvain Boureliou <sylvain.boureliou@makina-corpus.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: collective.portlet.contact\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"PO-Revision-Date: 2010-03-18 14:51+0200\n"
+"Last-Translator: Sylvain Boureliou <sylvain.boureliou@makina-corpus.com>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language-Code: fr\n"
+"Language-Name: French\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: collective.portlet.contact\n"
+
+#: ./browser/controlpanel.py:23
+msgid "Back-end"
+msgstr "Support de données"
+
+#: ./browser/controlpanel.py:78
+msgid "Changes canceled."
+msgstr "Les changement ont été annulés"
+
+#: ./browser/controlpanel.py:68
+msgid "Changes saved, you can now configure the back-end."
+msgstr "Les changements ont été sauvegardé, vous pouvez maintenant configurer le support de données."
+
+#: ./browser/dummy/controlpanel.py:90
+msgid "Configure DUMMY settings"
+msgstr "Configuration du support de données DUMMY"
+
+#: ./browser/ldap/controlpanel.py:116
+msgid "Configure LDAP settings"
+msgstr "Configuration du support de données LDAP"
+
+#: ./browser/controlpanel.py:85
+msgid "Configure the back-end"
+msgstr "Configuration du support de données"
+
+#: ./portlet/contact.py:37
+msgid "Contact"
+msgstr "Contact"
+
+#: ./portlet/contact.py:41
+msgid "Contact uniq id"
+msgstr "Identifiant unique du contact"
+
+#: ./browser/ldap/jpegPhoto.py:67
+msgid "Contact's photo form ${cn}"
+msgstr "Formulaire de téléchargement de la photo de ${cn}"
+
+#: ./browser/dummy/controlpanel.py:30
+msgid "Employee Type"
+msgstr ""
+
+#: ./browser/dummy/controlpanel.py:18
+msgid "Full name"
+msgstr "Nom affiché (complet)"
+
+#: ./browser/ldap/jpegPhoto.py:79
+msgid "Is not a JPEG"
+msgstr "N'est pas un format JPEG"
+
+#: ./browser/dummy/controlpanel.py:26
+msgid "Mail"
+msgstr "Courriel"
+
+#: ./browser/controlpanel.py:72
+msgid "No changes made."
+msgstr "Aucun changement n'a été fait."
+
+#: ./browser/dummy/controlpanel.py:22
+msgid "Phone"
+msgstr "Téléphone"
+
+#: ./browser/ldap/jpegPhoto.py:50
+msgid "Photo"
+msgstr "Photo"
+
+#: ./browser/dummy/controlpanel.py:34
+msgid "Photo URL"
+msgstr "Adresse URL de la photo"
+
+#: ./browser/controlpanel.py:54
+msgid "Portlet Contact: Select Back-end"
+msgstr "Portlet contact: Selectionnez un support de données"
+
+#: ./browser/dummy/controlpanel.py:88
+msgid "Portlet Contact: configure DUMMY settings"
+msgstr "Portlet Contact: Configurez le support de données DUMMY"
+
+#: ./browser/ldap/controlpanel.py:114
+msgid "Portlet Contact: configure LDAP settings"
+msgstr "Portlet Contact: Configurez le support de données LDAP"
+
+#: ./portlet/contact.py:33
+msgid "Portlet header"
+msgstr "En tête"
+
+#: ./browser/controlpanel.py:56
+msgid "Select Back-end"
+msgstr "Sélectionnez un support de données"
+
+#: ./browser/controlpanel.py:24
+msgid "Select the back-end for the Contact portlets."
+msgstr "Sélectionnez le support de données pour les portlets contact."
+
+#: ./browser/ldap/jpegPhoto.py:92
+msgid "The LDAP authentication credentials are invalid"
+msgstr "L'identifiant ou le mot de passe nécessaire pour se connecter au serveur LDAP est invalide."
+
+#: ./browser/ldap/jpegPhoto.py:88
+msgid "The LDAP server is unreacheable"
+msgstr "Le serveur LDAP n'est pas joignable. Merci de contacter l'administrateur."
+
+#: ./portlet/contact.py:38
+msgid "The contact to display."
+msgstr "Le contact à afficher"
+
+#: ./portlet/contact.py:42
+msgid "The contact uniq id."
+msgstr "L'identifiant unique du contact"
+
+#: ./browser/ldap/jpegPhoto.py:96
+msgid "The entry you have specified is not in the LDAP"
+msgstr "L'entrée que vous avez spécifiée n'est pas dans le serveur LDAP"
+
+#: ./browser/ldap/jpegPhoto.py:99
+msgid "The photo has been well upladed"
+msgstr "La photo a correctement été téléchargée et ajoutée au contact demandé."
+
+#: ./browser/ldap/jpegPhoto.py:56
+msgid "The unique ID of the ldap entry."
+msgstr "L'identifiant unique d'une entrée dans le serveur LDAP"
+
+#: ./portlet/contact.py:34
+msgid "Title of the rendered portlet"
+msgstr "Titre de la portlet"
+
+#: ./browser/ldap/jpegPhoto.py:55
+msgid "Unique ID"
+msgstr "Identifiant unique"
+
+#: ./browser/ldap/jpegPhoto.py:69
+msgid "Upload"
+msgstr "Télécharger"
+
+#: ./browser/ldap/jpegPhoto.py:51
+msgid "Upload a jpeg photo."
+msgstr "Téléchargez une photo au format JPG"
+
+#. Default: "A portlet which can display a contact."
+#: ./portlet/contact.py:99
+msgid "description_contact_portlet"
+msgstr "Une portlet pouvant afficher un contact"
+
+#. Default: "The DN of a manager account in the LDAP directory. This must be allowed to access all user informations."
+#: ./browser/ldap/controlpanel.py:32
+msgid "help_ldap_bind_dn"
+msgstr "Le DN du compte administrateur du serveur LDAP. Ce compte doit permettre l'accès à l'ensemble des données."
+
+#. Default: "Password to use when binding to the LDAP server."
+#: ./browser/ldap/controlpanel.py:39
+msgid "help_ldap_bind_password"
+msgstr "Le mot de passe de l'utilisateur administrateur du serveur LDAP."
+
+#. Default: "This is the location in your LDAP directory where all users are stored."
+#: ./browser/ldap/controlpanel.py:45
+msgid "help_ldap_search_base"
+msgstr "Il s'agit de ou sont les contacts dans l'annuaire."
+
+#. Default: "The address or hostname of the LDAP server."
+#: ./browser/ldap/controlpanel.py:20
+msgid "help_ldap_server"
+msgstr "L'adresse ou le host du serveur LDAP"
+
+#. Default: "The system port of the LDAP server."
+#: ./browser/ldap/controlpanel.py:26
+msgid "help_ldap_server_port"
+msgstr "Le port du serveur LDAP"
+
+#. Default: "If True the LDAP server will search for users0 directly in the user base location and will also look in subfolders of the user base location."
+#: ./browser/ldap/controlpanel.py:52
+msgid "help_search_recursive"
+msgstr "Si coché, le serveur LDAP recherchera dans le contact directement à la racine et dans les sous dossiers de manière récursive."
+
+#. Default: "Cancel"
+#: ./browser/controlpanel.py:74
+msgid "label_cancel"
+msgstr "Annuler"
+
+#. Default: "Bind DN"
+#: ./browser/ldap/controlpanel.py:30
+msgid "label_ldap_bind_dn"
+msgstr "DN de connexion"
+
+#. Default: "Bind password"
+#: ./browser/ldap/controlpanel.py:37
+msgid "label_ldap_bind_password"
+msgstr "Mot de passe de connexion"
+
+#. Default: "Base DN for contacts"
+#: ./browser/ldap/controlpanel.py:43
+msgid "label_ldap_search_base"
+msgstr "Le DN de base pour les contacts."
+
+#. Default: "LDAP server"
+#: ./browser/ldap/controlpanel.py:18
+msgid "label_ldap_server"
+msgstr "Serveur LDAP"
+
+#. Default: "LDAP port"
+#: ./browser/ldap/controlpanel.py:24
+msgid "label_ldap_server_port"
+msgstr "Port du serveur LDAP"
+
+#. Default: "Save"
+#: ./browser/controlpanel.py:63
+msgid "label_save"
+msgstr "Sauvegarder"
+
+#. Default: "Search recursively for contacts"
+#: ./browser/ldap/controlpanel.py:50
+msgid "label_search_recursive"
+msgstr "Recherche récursivement des contacts"
+
+#. Default: "Add contact portlet"
+#: ./portlet/contact.py:97
+msgid "title_add_contact_portlet"
+msgstr "Ajouter une portlet contact"
+
+#. Default: "Edit contact text portlet"
+#: ./portlet/contact.py:120
+msgid "title_edit_contact_portlet"
+msgstr "Modifier la portlet contact"

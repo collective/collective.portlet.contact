@@ -10,6 +10,8 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 from collective.portlet.contact.interfaces import IPortletContactUtility
 from collective.portlet.contact.utils import getPropertySheet, encode_email
 from collective.portlet.contact.browser.ldap.utils import LdapServer
+from Products.CMFCore.utils import getToolByName
+
 
 class PortletContactLdap:
     classProvides(IPortletContactUtility)
@@ -63,7 +65,7 @@ class PortletContactLdap:
 
     def getContactInfos(self, context, uniq_id):
         # Used by the portlet
-        
+        urltool = getToolByName(context, 'portal_url')
         contacts = self._search(context,
                                 search_on='uid', 
                                 query=uniq_id, 
@@ -72,10 +74,15 @@ class PortletContactLdap:
                                 limit=1)
         if contacts:
             c = contacts[0]
+            jpegurl = urltool() + '/@@ldapJpegPhoto?uid='+c['datas']['uid']
             return {'fullname': c['datas']['cn'],
                     'phonenumber': c['datas']['telephoneNumber'],
                     'mail': encode_email(c['datas']['mail'],
                                          c['datas']['mail']),
-                    'employeetype': c['datas']['employeeType']}
+                    'employeetype': c['datas']['employeeType'],
+                    'uid': c['datas']['uid'],
+                    'photourl': jpegurl}
         else:
             return None
+
+portletContactLdap = PortletContactLdap()
