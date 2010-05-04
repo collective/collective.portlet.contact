@@ -48,15 +48,20 @@ class PortletContactLdap:
         
         return results
 
-    def search(self, context, q="", limit=10):
+    def search(self, context, q="", limit=10, search_on='cn', attrs=[],
+               format='ajax'):
         # Used by the autocomplete widget
-        
+        attrs.extend(['uid', 'cn', 'mail'])
+        search_attr = list(set(attrs))
         contacts = self._search(context,
-                                search_on='cn', 
-                                query=q, 
-                                attrs=['uid', 'cn', 'mail'], 
+                                search_on=search_on,
+                                query=q,
+                                attrs=search_attr,
                                 limit=limit)
-        
+
+        if format!='ajax':
+            return contacts
+    
         results = ['%s (%s)|%s' % (c['datas']['cn'], 
                                    c['datas']['mail'], 
                                    c['datas']['uid']) for c in contacts]
