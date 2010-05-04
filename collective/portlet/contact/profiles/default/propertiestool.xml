@@ -12,7 +12,7 @@
     <property name="ldap_bind_password" type="string">secret</property>
     <property name="ldap_search_base" type="string">ou=People,dc=mydomain,dc=com</property>
     <property name="ldap_search_recursive" type="boolean">False</property>
-    <property name="ldap_default_photo_path" type="string">images/photomarcdurand.png</property>
+    <property name="ldap_default_photo_path" type="string">images/contact-photo.jpg</property>
 
     <property name="dummy_fullname" type="string">Foo Bar</property>
     <property name="dummy_phone" type="string">+33 (0) 111 222 333</property>
