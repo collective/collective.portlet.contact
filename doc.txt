@@ -37,6 +37,12 @@ Change History
 0.1 - (unreleased)
 ================
 
+- Add support for jpegPhoto (display+form) with ldap backend
+  [toutpt]
+
+- Add french translation
+  [toutpt]
+
 - Initial release.
   [sylvainb]
 
