@@ -9,6 +9,8 @@ from ldap import modlist
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 from Products.statusmessages.interfaces import IStatusMessage
+from Products.CMFCore.utils import getToolByName
+from collective.portlet.contact.utils import getPropertySheet
 
 from plone.app.z3cform import layout
 from zope import interface
@@ -19,7 +21,9 @@ from z3c.form.interfaces import HIDDEN_MODE
 
 
 class jpegPhoto(BrowserView):
-    """return the jpeg photo get from uid"""
+    """return the jpeg photo get from uid
+       or '' if an error occured (photo unavailable in LDAP and no default 
+       photo provided)"""
     
     def __init__(self, context, request):
         self.context = context
@@ -37,12 +41,23 @@ class jpegPhoto(BrowserView):
                         attrs=['jpegPhoto'],
                         query=uid)
 
-        if len(entries)<1:
-            return ''
+        has_ldap_photo = len(entries) > 0 \
+                         and entries[0]['datas']['jpegPhoto'] is not None
+        if has_ldap_photo:
+            data = entries[0]['datas']['jpegPhoto']
+        else:
+            # use a default ATImage photo
+            props = getPropertySheet(self.context)
+            default_path = props.ldap_default_photo_path
+            
+            portal = getToolByName(self.context, 'portal_url').getPortalObject()
+            try:
+                image = portal.unrestrictedTraverse(default_path)
+                data = image.data
+            except KeyError, AttributeError:
+                self.context.plone_log('No valid default photo provided for collective.portlet.contact > LDAP backend')
+                data = ''
 
-        data = entries[0]['datas']['jpegPhoto']
-        if not data:
-            return ''
         self.request.response.setHeader('Content-Type', 'image/jpeg')
         self.request.response.write(data)
 

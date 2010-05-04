@@ -55,6 +55,12 @@ class IPortletContactLdapControlPanel(Interface):
                                               'subfolders of the user base location.'),
                                 required=False)
 
+    ldap_default_photo_path = schema.ASCIILine(title=_(u'label_ldap_default_photo_path',
+                                        default=u'Path to a default photo (ATImage) in your Plone site (ex: images/contact-photo.jpg)'),
+                                description=_(u'help_ldap_default_photo_path',
+                                              default=u'This photo will be used if the LDAP contact has no associated photo.'),
+                                required=True)
+
 class PortletContactLdapControlPanelAdapter(SchemaAdapterBase):
 
     adapts(IPloneSiteRoot)
@@ -100,6 +106,12 @@ class PortletContactLdapControlPanelAdapter(SchemaAdapterBase):
     def getSearchRecursive(self):
         return self.props.ldap_search_recursive
     ldap_search_recursive = property(getSearchRecursive, setSearchRecursive)
+
+    def setDefaultPhotoPath(self, value):
+        self.props.manage_changeProperties(ldap_default_photo_path=value)
+    def getDefaultPhotoPath(self):
+        return self.props.ldap_default_photo_path
+    ldap_default_photo_path = property(getDefaultPhotoPath, setDefaultPhotoPath)
 
 class PortletContactLdapControlPanel(ControlPanelForm):
     """ collective.portlet.contact LDAP Control Panel Form """

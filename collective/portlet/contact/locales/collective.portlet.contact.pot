@@ -246,3 +246,13 @@ msgstr ""
 msgid "title_edit_contact_portlet"
 msgstr ""
 
+#. Default: "Path to a default photo (ATImage) in your Plone site (ex: images/contact-photo.jpg)"
+#: ./browser/ldap/controlpanel.py:58
+msgid "label_ldap_default_photo_path"
+msgstr ""
+
+#. Default: "This photo will be used if the LDAP contact has no associated photo."
+#: ./browser/ldap/controlpanel.py:60
+msgid "help_ldap_default_photo_path"
+msgstr ""
+

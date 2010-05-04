@@ -242,3 +242,13 @@ msgstr "Ajouter une portlet contact"
 msgid "title_edit_contact_portlet"
 msgstr "Modifier la portlet contact"
 
+#. Default: "Path to a default photo (ATImage) in your Plone site (ex: images/contact-photo.jpg)"
+#: ./browser/ldap/controlpanel.py:58
+msgid "label_ldap_default_photo_path"
+msgstr "Path pointant sur une photo Plone (ATImage) à utiliser par défaut (ex: images/contact-photo.jpg)."
+
+#. Default: "This photo will be used if the LDAP contact has no associated photo."
+#: ./browser/ldap/controlpanel.py:60
+msgid "help_ldap_default_photo_path"
+msgstr "Cette photo sera utilisée si aucune photo n'est associée au contact dans le LDAP."
+
