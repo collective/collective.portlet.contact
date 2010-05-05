@@ -40,5 +40,8 @@ def encode_email(emailvalue, namevalue):
        then executes the code using the 'eval' statement
        /... and ta da ... you've got a normal mailto address displayed in the browser.
        //Written by Jeff Robson of Cynergic Net Solutions www.cynergic.net jeff.robson@cynergic.net"""
-    new_text=hex_string('document.write(\'<a href=\"mailto:'+emailvalue+'\">'+namevalue+'</a>\')')
-    return '<script language=\"JavaScript\">eval(unescape(\''+new_text+'\'))</script>'
+    if emailvalue is not None and namevalue is not None:
+        new_text=hex_string('document.write(\'<a href=\"mailto:'+emailvalue+'\">'+namevalue+'</a>\')')
+        return '<script language=\"JavaScript\">eval(unescape(\''+new_text+'\'))</script>'
+    else:
+        return ''

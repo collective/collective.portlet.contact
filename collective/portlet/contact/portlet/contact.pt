@@ -11,14 +11,22 @@
 
     <dd class="portletItem odd">
         <img tal:attributes="src python:contact['photourl']" width="50"/>
-        <div id="fullname"
-             tal:content="structure python:contact['fullname']" />
-        <div id="employeetype"
-             tal:content="structure python:contact['employeetype']" />
-        <div id="mail"
-             tal:content="structure python:contact['mail']" />
-        <div id="phonenumber"
-             tal:content="structure python:contact['phonenumber']" />
+        
+        <div id="fullname" tal:define="fullname python:contact['fullname']"
+             tal:condition="fullname"
+             tal:content="structure fullname" />
+        
+        <div id="employeetype" tal:define="employeetype python:contact['employeetype']"
+             tal:condition="employeetype"
+             tal:content="structure employeetype" />
+        
+        <div id="mail" tal:define="mail python:contact['mail']"
+             tal:condition="mail"
+             tal:content="structure mail" />
+        
+        <div id="phonenumber" tal:define="phonenumber python:contact['phonenumber']"
+             tal:condition="phonenumber"
+             tal:content="structure phonenumber" />
     </dd>
 
 </dl>

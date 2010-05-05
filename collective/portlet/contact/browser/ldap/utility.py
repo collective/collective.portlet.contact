@@ -61,10 +61,16 @@ class PortletContactLdap:
 
         if format!='ajax':
             return contacts
-    
-        results = ['%s (%s)|%s' % (c['datas']['cn'], 
-                                   c['datas']['mail'], 
-                                   c['datas']['uid']) for c in contacts]
+        
+        results = []
+        for c in contacts:
+            if c['datas']['mail']:
+                value = '%s (%s)' % (c['datas']['cn'], 
+                                     c['datas']['mail'])
+            else:
+                value = c['datas']['cn']
+            uid = c['datas']['uid']
+            results.append('%s|%s' % (value, uid))
         
         return '\n'.join(results)
 
