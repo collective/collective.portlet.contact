@@ -22,7 +22,7 @@
       name="ldapJpegPhoto"
       for="*"
       class=".jpegPhoto.jpegPhoto"
-      permission="cmf.ManagePortal"
+      permission="zope2.View"
       />
   <browser:page
       name="ldapJpegPhoto.form"
