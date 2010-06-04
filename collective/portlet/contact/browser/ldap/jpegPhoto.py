@@ -18,6 +18,15 @@ from zope import schema
 from zope.component import getUtility
 from z3c.form import button, field, form
 from z3c.form.interfaces import HIDDEN_MODE
+from OFS.Image import Image
+from StringIO import StringIO
+
+def get_properties(context):
+    props = getPropertySheet(context)
+    config = {}
+    config['default_photo_path'] = getattr(props, 'ldap_default_photo_path','')
+    config['photo_storage'] = getattr(props, 'ldap_photo_storage', 'ofs')
+    return config
 
 
 class jpegPhoto(BrowserView):
@@ -34,7 +43,25 @@ class jpegPhoto(BrowserView):
         uid = request.get('uid', None)
         if not uid:
             return ''
+        config = get_properties(self.context)
+        storage = config['photo_storage']
+        accessor = getattr(self, 'getFrom_'+storage)
+        accessor(uid)
 
+    def getFrom_ofs(self, uid):
+        data = ''
+        portal = getToolByName(self.context, 'portal_url').getPortalObject()
+        photo = getattr(portal.portlet_contact_photo, uid, '')
+        if photo:
+            data = str(photo.data)
+        self.request.response.setHeader('Content-Type', 'image/jpeg')
+        self.request.response.write(data)
+
+    def getFrom_archetypes(self, uid):
+        raise NotImplementedError
+
+    def getFrom_ldap(self, uid):
+        config = get_properties(self.context)
         utility = getUtility(IPortletContactUtility, name='ldap')
 
         entries = utility._search(self.context, search_on='uid',
@@ -47,8 +74,7 @@ class jpegPhoto(BrowserView):
             data = entries[0]['datas']['jpegPhoto']
         else:
             # use a default ATImage photo
-            props = getPropertySheet(self.context)
-            default_path = props.ldap_default_photo_path
+            default_path = config['default_photo_path']
             
             portal = getToolByName(self.context, 'portal_url').getPortalObject()
             try:
@@ -89,6 +115,29 @@ class Form(form.Form):
         data, errors = self.extractData()
         if errors:
             return
+        config = get_properties(self.context)
+        storage = config['photo_storage']
+        mutator = getattr(self, 'setPhoto_'+storage)
+        mutator(data)
+
+    def setPhoto_ofs(self, data):
+        photo_data = data['photo']
+        content_type = self.widgets['photo'].value.headers['content-type']
+        if content_type != 'image/jpeg':
+            raise form.interfaces.WidgetActionExecutionError(
+                   'photo', interface.Invalid(_(u'Is not a JPEG')))
+        photo_file = StringIO()
+        photo_file.write(photo_data)
+        ofs_image = Image(data['uid'], 'photo for '+data['uid'],
+                      photo_file, content_type='image/jpeg')
+        IStatusMessage(self.request).addStatusMessage(
+                                      _(u"The photo has been well upladed"))
+        self.request.response.redirect(self.context.absolute_url()+'/view')
+
+    def setPhoto_archetypes(self, data):
+        raise NotImplementedError
+
+    def setPhoto_ldap(self, data):
         photo = data['photo']
         #check the content type of the uploaded file
         content_type = self.widgets['photo'].value.headers['content-type']
@@ -136,6 +185,7 @@ class Form(form.Form):
         else:
             config['scope'] = ldap.SCOPE_ONELEVEL
         return config
+
 
 class Page(layout.FormWrapper):
 
