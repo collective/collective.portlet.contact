@@ -46,7 +46,11 @@ class jpegPhoto(BrowserView):
         config = get_properties(self.context)
         storage = config['photo_storage']
         accessor = getattr(self, 'getFrom_'+storage)
-        accessor(uid)
+        data = accessor(uid)
+        if not data:
+            data = self.getFrom_default(uid)
+        self.request.response.setHeader('Content-Type', 'image/jpeg')
+        self.request.response.write(data)
 
     def getFrom_ofs(self, uid):
         data = ''
@@ -54,8 +58,7 @@ class jpegPhoto(BrowserView):
         photo = getattr(portal.portlet_contact_photo, uid, '')
         if photo:
             data = str(photo.data)
-        self.request.response.setHeader('Content-Type', 'image/jpeg')
-        self.request.response.write(data)
+        return data
 
     def getFrom_archetypes(self, uid):
         raise NotImplementedError
@@ -70,23 +73,25 @@ class jpegPhoto(BrowserView):
 
         has_ldap_photo = len(entries) > 0 \
                          and entries[0]['datas']['jpegPhoto'] is not None
-        if has_ldap_photo:
-            data = entries[0]['datas']['jpegPhoto']
-        else:
-            # use a default ATImage photo
-            default_path = config['default_photo_path']
-            
-            portal = getToolByName(self.context, 'portal_url').getPortalObject()
-            try:
-                image = portal.unrestrictedTraverse(default_path)
-                data = image.data
-            except KeyError, AttributeError:
-                self.context.plone_log('No valid default photo provided for collective.portlet.contact > LDAP backend')
-                data = ''
+        if not has_ldap_photo:
+            return ''
+        data = entries[0]['datas']['jpegPhoto']
 
         self.request.response.setHeader('Content-Type', 'image/jpeg')
         self.request.response.write(data)
 
+    def getFrom_default(self, uid):
+        config = get_properties(self.context)
+        default_path = config['default_photo_path']
+        
+        portal = getToolByName(self.context, 'portal_url').getPortalObject()
+        try:
+            image = portal.unrestrictedTraverse(default_path)
+            data = image.data
+        except KeyError, AttributeError:
+            self.context.plone_log('No valid default photo provided for collective.portlet.contact > LDAP backend')
+            data = ''
+        return data
 
 class Schema(interface.Interface):
     """Schema to upload a photo to contact inside LDAP"""
