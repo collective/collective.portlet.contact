@@ -38,7 +38,6 @@ Change History
 ================
 
 - Allow to configure a default photo for the LDAP backend.
-  [sylvainb]
 
 - Add support for jpegPhoto (display+form) with ldap backend
   [toutpt]
