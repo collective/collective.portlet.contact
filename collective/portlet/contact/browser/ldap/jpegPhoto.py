@@ -138,6 +138,7 @@ class Form(form.Form):
                       photo_file, content_type='image/jpeg')
         portal = getToolByName(self.context, 'portal_url').getPortalObject()
         container = portal.portlet_contact_photo
+        if photo_id in container: del container[photo_id]
         container[photo_id] = ofs_image
         IStatusMessage(self.request).addStatusMessage(
                                       _(u"The photo has been well upladed"))
