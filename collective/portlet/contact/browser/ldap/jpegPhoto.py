@@ -133,8 +133,12 @@ class Form(form.Form):
                    'photo', interface.Invalid(_(u'Is not a JPEG')))
         photo_file = StringIO()
         photo_file.write(photo_data)
-        ofs_image = Image(data['uid'], 'photo for '+data['uid'],
+        photo_id = str(data['uid'])
+        ofs_image = Image(photo_id, 'photo for '+data['uid'],
                       photo_file, content_type='image/jpeg')
+        portal = getToolByName(self.context, 'portal_url').getPortalObject()
+        container = portal.portlet_contact_photo
+        container[photo_id] = ofs_image
         IStatusMessage(self.request).addStatusMessage(
                                       _(u"The photo has been well upladed"))
         self.request.response.redirect(self.context.absolute_url()+'/view')
