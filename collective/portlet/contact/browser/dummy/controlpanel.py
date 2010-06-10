@@ -9,7 +9,11 @@ from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.CMFDefault.formlib.schema import SchemaAdapterBase
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFCore.utils import getToolByName
-from plone.app.controlpanel.form import ControlPanelForm, _template
+from plone.app.controlpanel.form import ControlPanelForm
+try:
+    from plone.app.controlpanel.form import _template
+except ImportError:
+    _template = ControlPanelForm.template
 
 from collective.portlet.contact.i18n import MessageFactory as _
 

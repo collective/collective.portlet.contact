@@ -39,6 +39,9 @@ Change History
 
 - Allow to configure a default photo for the LDAP backend.
 
+- Add backend support for jpegPhoto. configurable throw portal_properties
+  [toutpt]
+
 - Add support for jpegPhoto (display+form) with ldap backend
   [toutpt]
 
