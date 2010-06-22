@@ -26,6 +26,7 @@ def get_properties(context):
     config = {}
     config['default_photo_path'] = getattr(props, 'ldap_default_photo_path','')
     config['photo_storage'] = getattr(props, 'ldap_photo_storage', 'ofs')
+    config['photo_cache_maxage'] = getattr(props, 'ldap_photo_cache_maxage', '')
     return config
 
 
@@ -50,7 +51,13 @@ class jpegPhoto(BrowserView):
         if not data:
             data = self.getFrom_default(uid)
         self.request.response.setHeader('Content-Type', 'image/jpeg')
+        self.request.response.setHeader('Content-Length', len(data))
+        maxage = config['photo_cache_maxage']
+        if maxage:
+            self.request.response.setHeader('Cache-Control','max-age=%s'%maxage)
+
         self.request.response.write(data)
+
 
     def getFrom_ofs(self, uid):
         data = ''

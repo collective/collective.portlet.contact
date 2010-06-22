@@ -6,6 +6,9 @@ Change History
 0.1 - (unreleased)
 ================
 
+- Add cache control max-age on ldap jpegPhoto
+  [toutpt]
+
 - Allow to configure a default photo for the LDAP backend.
 
 - Add backend support for jpegPhoto. configurable throw portal_properties
