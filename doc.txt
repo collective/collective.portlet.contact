@@ -8,6 +8,7 @@ Display a contact in a Plone portlet.
 
 Two backends are provided, thez are responsible to retrieve the contact's 
 informations:
+
  * Dummy backend, used for tests
  * LDAP backend 
 
@@ -50,6 +51,12 @@ Change History
 **************
 
 (name of developer listed in brackets)
+
+1.0b2 (unreleased)
+==================
+
+- Nothing changed yet.
+
 
 1.0b1 (2010-10-07)
 ==================

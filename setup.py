@@ -9,17 +9,6 @@ def read(*rnames):
         os.path.join('.', *rnames)
     ).read()
 
-long_description = ('\n'.join((
-    read('collective', 'portlet', 'contact', 'README.txt'), ''
-    'Detailed Documentation',
-    '**********************', '',
-    read('docs', 'HISTORY.txt'), '',
-    'Download',
-    '********', ''
-)))
-
-open('doc.txt', 'w').write(long_description)
-
 classifiers = [
     "Framework :: Plone",
     "Framework :: Zope2",
@@ -33,7 +22,8 @@ setup(
     namespace_packages=['collective', 'collective.portlet',],
     version=version,
     description='Display LDAP contacts in Plone portlets.',
-    long_description=long_description,
+    long_description=open("README.txt").read() + "\n" +
+                     open(os.path.join("docs", "HISTORY.txt")).read(),
     classifiers=classifiers,
     keywords='plone portlet ldap contact',
     author='Sylvain Boureliou',
