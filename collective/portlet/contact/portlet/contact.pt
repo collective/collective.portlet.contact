@@ -1,4 +1,7 @@
-<dl tal:attributes="class string:portlet collectivePortletContact"
+<dl xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    tal:attributes="class string:portlet collectivePortletContact"
     i18n:domain="collective.portlet.contact"
     tal:define="contact view/getContactInfo"
 	tal:condition="python:contact is not None">

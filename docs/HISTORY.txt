@@ -1,10 +1,18 @@
 Change History
 ==============
 
-1.0b3 (unreleased)
+1.0b3 (2010-10-30)
 ------------------
 
-- Nothing changed yet.
+- Fix zcml security declaration for the @@cpc-search browser page.
+  [sylvainb]
+- Add plone.app.z3cform as dependency.
+  [sylvainb]
+- Ldap backend: allow to configure ldap_photo_storage, ldap_photo_ofs_directory
+  and ldap_photo_cache_maxage from the control panel.
+  [sylvainb]
+- Update french translations.
+  [sylvainb]
 
 
 1.0b2 (2010-10-07)

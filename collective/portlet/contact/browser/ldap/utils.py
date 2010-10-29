@@ -15,7 +15,7 @@ class LdapServer(object):
 
     def connect(self):
         try:
-            self.l = ldap.open(self.host, port=self.port)
+            self.l = ldap.initialize('ldap://%s:%s' % (self.host, str(self.port)))
             self.l.simple_bind_s(self.dn, self.credential)
         except ldap.LDAPError, error_message:
             # Couldn't connect

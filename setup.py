@@ -2,7 +2,7 @@ import os, sys
 
 from setuptools import setup, find_packages
 
-version = '1.0b3dev'
+version = '1.0b3'
 
 def read(*rnames):
     return open(
@@ -36,6 +36,7 @@ setup(
     install_requires=[
         'setuptools',
         # -*- Extra requirements: -*-
+        'plone.app.z3cform'
     ],
     # define there your console scripts
     entry_points="""

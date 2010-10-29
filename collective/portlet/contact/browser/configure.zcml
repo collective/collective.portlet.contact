@@ -20,11 +20,12 @@
       />
 
   <!-- Only a plone manager can access to the search view -->
-  <browser:view
+  <browser:page
       for="*"
       name="cpc-search"
       permission="cmf.ModifyPortalContent"
       class=".searcher.ContactSearchView"
+      allowed_attributes="search"
     />
 
   <!-- DUMMY utility and control-panel page -->

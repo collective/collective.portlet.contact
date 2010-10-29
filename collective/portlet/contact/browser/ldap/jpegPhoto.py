@@ -24,8 +24,13 @@ from StringIO import StringIO
 def get_properties(context):
     props = getPropertySheet(context)
     config = {}
+    # Default photo path in the ZMI, used when the contact photo is not found.
     config['default_photo_path'] = getattr(props, 'ldap_default_photo_path','')
+    # Photo storage backend: ldap, ofs or archetypes (archetypes backend is not yet implemented).
     config['photo_storage'] = getattr(props, 'ldap_photo_storage', 'ofs')
+    # Used by the ofs backend, a path which point on an existing Plone folder.
+    config['photo_ofs_directory'] = getattr(props, 'ldap_photo_ofs_directory', 'images')
+    # For caching purpose, used by the Cache-Control max-age request header.
     config['photo_cache_maxage'] = getattr(props, 'ldap_photo_cache_maxage', '')
     return config
 
@@ -50,19 +55,26 @@ class jpegPhoto(BrowserView):
         data = accessor(uid)
         if not data:
             data = self.getFrom_default(uid)
+        
         self.request.response.setHeader('Content-Type', 'image/jpeg')
         self.request.response.setHeader('Content-Length', len(data))
         maxage = config['photo_cache_maxage']
         if maxage:
             self.request.response.setHeader('Cache-Control','max-age=%s'%maxage)
-
         self.request.response.write(data)
 
 
     def getFrom_ofs(self, uid):
         data = ''
         portal = getToolByName(self.context, 'portal_url').getPortalObject()
-        photo = getattr(portal.portlet_contact_photo, uid, '')
+        config = get_properties(self.context)
+        try:
+            photo = portal.unrestrictedTraverse(config['photo_ofs_directory'] + '/' + uid)
+        except AttributeError:
+            photo = None
+        except KeyError:
+            photo = None
+
         if photo:
             data = str(photo.data)
         return data
@@ -83,9 +95,7 @@ class jpegPhoto(BrowserView):
         if not has_ldap_photo:
             return ''
         data = entries[0]['datas']['jpegPhoto']
-
-        self.request.response.setHeader('Content-Type', 'image/jpeg')
-        self.request.response.write(data)
+        return data
 
     def getFrom_default(self, uid):
         config = get_properties(self.context)
@@ -95,7 +105,10 @@ class jpegPhoto(BrowserView):
         try:
             image = portal.unrestrictedTraverse(default_path)
             data = image.data
-        except KeyError, AttributeError:
+        except AttributeError:
+            self.context.plone_log('No valid default photo provided for collective.portlet.contact > LDAP backend')
+            data = ''
+        except KeyError:
             self.context.plone_log('No valid default photo provided for collective.portlet.contact > LDAP backend')
             data = ''
         return data
@@ -137,18 +150,33 @@ class Form(form.Form):
         content_type = self.widgets['photo'].value.headers['content-type']
         if content_type != 'image/jpeg':
             raise form.interfaces.WidgetActionExecutionError(
-                   'photo', interface.Invalid(_(u'Is not a JPEG')))
+                   'photo', interface.Invalid(_(u'Is not a JPEG photo')))
         photo_file = StringIO()
         photo_file.write(photo_data)
         photo_id = str(data['uid'])
-        ofs_image = Image(photo_id, 'photo for '+data['uid'],
+        ofs_image = Image(photo_id, 'Photo for '+data['uid'],
                       photo_file, content_type='image/jpeg')
         portal = getToolByName(self.context, 'portal_url').getPortalObject()
-        container = portal.portlet_contact_photo
-        if photo_id in container: del container[photo_id]
-        container[photo_id] = ofs_image
-        IStatusMessage(self.request).addStatusMessage(
-                                      _(u"The photo has been well upladed"))
+        config = get_properties(self.context)
+        try:
+            container = portal.unrestrictedTraverse(config['photo_ofs_directory'])
+        except AttributeError:
+            self.context.plone_log('No valid Plone folder provided for collective.portlet.contact > LDAP backend & OFS backend for the photo')
+            container = None
+        except KeyError:
+            self.context.plone_log('No valid Plone folder provided for collective.portlet.contact > LDAP backend & OFS backend for the photo')
+            container = None
+        
+        if container:
+            container = portal.portlet_contact_photo
+            if photo_id in container: del container[photo_id]
+            container[photo_id] = ofs_image
+            IStatusMessage(self.request).addStatusMessage(
+                                          _(u"The photo has been well uploaded"))
+        else:
+            IStatusMessage(self.request).addStatusMessage(
+                                          _(u"The photo can't be uploaded"))
+            
         self.request.response.redirect(self.context.absolute_url()+'/view')
 
     def setPhoto_archetypes(self, data):
@@ -160,10 +188,10 @@ class Form(form.Form):
         content_type = self.widgets['photo'].value.headers['content-type']
         if content_type != 'image/jpeg':
             raise form.interfaces.WidgetActionExecutionError(
-                   'photo', interface.Invalid(_(u'Is not a JPEG')))
+                   'photo', interface.Invalid(_(u'Is not a JPEG photo')))
         #try to set the photo to the contact
         try:
-            setPhoto(self.context, data['uid'], photo)
+            _setPhoto_ldap(self.context, data['uid'], photo)
         except ldap.SERVER_DOWN:
             raise form.interfaces.ActionExecutionError(
                     interface.Invalid(
@@ -182,7 +210,7 @@ class Form(form.Form):
                     _("The LDAP credentials provided has not the modify permission.")))
 
         IStatusMessage(self.request).addStatusMessage(
-                                      _(u"The photo has been well upladed"))
+                                      _(u"The photo has been well uploaded"))
         self.request.response.redirect(self.context.absolute_url()+'/view')
 
     def updateWidgets(self):
@@ -208,7 +236,7 @@ class Page(layout.FormWrapper):
 
     form = Form
 
-def setPhoto(context, uid , photo):
+def _setPhoto_ldap(context, uid , photo):
     props = getPropertySheet(context)
 
     if props.ldap_search_recursive:

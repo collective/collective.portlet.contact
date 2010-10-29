@@ -2,7 +2,8 @@ TODO
 ============
 
 * LDAP backend
-  - Add explicit error messages if the ldap server is down, ...
+  - The stuff about editing the photo is not finished and need tests with Plone 4
+  - Add explicit error messages or logs if the ldap server is down, ...
   - Add some configuration examples in the backend config form.
 
 * Add tests !!!

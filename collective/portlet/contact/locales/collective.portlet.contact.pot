@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-03-25 11:12+0000\n"
+"POT-Creation-Date: 2010-10-29 21:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,31 +17,31 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.portlet.contact\n"
 
-#: ./browser/dummy/controlpanel.py:19
+#: ./browser/dummy/controlpanel.py:23
 msgid ""
 msgstr ""
 
-#: ./browser/controlpanel.py:23
+#: ./browser/controlpanel.py:28
 msgid "Back-end"
 msgstr ""
 
-#: ./browser/controlpanel.py:78
+#: ./browser/controlpanel.py:83
 msgid "Changes canceled."
 msgstr ""
 
-#: ./browser/controlpanel.py:68
+#: ./browser/controlpanel.py:73
 msgid "Changes saved, you can now configure the back-end."
 msgstr ""
 
-#: ./browser/dummy/controlpanel.py:90
+#: ./browser/dummy/controlpanel.py:94
 msgid "Configure DUMMY settings"
 msgstr ""
 
-#: ./browser/ldap/controlpanel.py:116
+#: ./browser/ldap/controlpanel.py:186
 msgid "Configure LDAP settings"
 msgstr ""
 
-#: ./browser/controlpanel.py:85
+#: ./browser/controlpanel.py:90
 msgid "Configure the back-end"
 msgstr ""
 
@@ -53,51 +53,51 @@ msgstr ""
 msgid "Contact uniq id"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:70
+#: ./browser/ldap/jpegPhoto.py:136
 msgid "Contact's photo form ${cn}"
 msgstr ""
 
-#: ./browser/dummy/controlpanel.py:30
+#: ./browser/dummy/controlpanel.py:34
 msgid "Employee Type"
 msgstr ""
 
-#: ./browser/dummy/controlpanel.py:18
+#: ./browser/dummy/controlpanel.py:22
 msgid "Full name"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:82
-msgid "Is not a JPEG"
+#: ./browser/ldap/jpegPhoto.py:153
+msgid "Is not a JPEG photo"
 msgstr ""
 
-#: ./browser/dummy/controlpanel.py:26
+#: ./browser/dummy/controlpanel.py:30
 msgid "Mail"
 msgstr ""
 
-#: ./browser/controlpanel.py:72
+#: ./browser/controlpanel.py:77
 msgid "No changes made."
 msgstr ""
 
-#: ./browser/dummy/controlpanel.py:22
+#: ./browser/dummy/controlpanel.py:26
 msgid "Phone"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:53
+#: ./browser/ldap/jpegPhoto.py:119
 msgid "Photo"
 msgstr ""
 
-#: ./browser/dummy/controlpanel.py:34
+#: ./browser/dummy/controlpanel.py:38
 msgid "Photo URL"
 msgstr ""
 
-#: ./browser/controlpanel.py:54
+#: ./browser/controlpanel.py:59
 msgid "Portlet Contact: Select Back-end"
 msgstr ""
 
-#: ./browser/dummy/controlpanel.py:88
+#: ./browser/dummy/controlpanel.py:92
 msgid "Portlet Contact: configure DUMMY settings"
 msgstr ""
 
-#: ./browser/ldap/controlpanel.py:114
+#: ./browser/ldap/controlpanel.py:184
 msgid "Portlet Contact: configure LDAP settings"
 msgstr ""
 
@@ -105,23 +105,27 @@ msgstr ""
 msgid "Portlet header"
 msgstr ""
 
-#: ./browser/controlpanel.py:56
+#: ./browser/dummy/controlpanel.pt:12
+msgid "Return to back-end selection"
+msgstr ""
+
+#: ./browser/controlpanel.py:61
 msgid "Select Back-end"
 msgstr ""
 
-#: ./browser/controlpanel.py:24
+#: ./browser/controlpanel.py:29
 msgid "Select the back-end for the Contact portlets."
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:93
+#: ./browser/ldap/jpegPhoto.py:202
 msgid "The LDAP authentication credentials are invalid"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:101
+#: ./browser/ldap/jpegPhoto.py:210
 msgid "The LDAP credentials provided has not the modify permission."
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:89
+#: ./browser/ldap/jpegPhoto.py:198
 msgid "The LDAP server is unreacheable"
 msgstr ""
 
@@ -133,15 +137,19 @@ msgstr ""
 msgid "The contact uniq id."
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:97
+#: ./browser/ldap/jpegPhoto.py:206
 msgid "The entry you have specified is not in the LDAP"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:104
-msgid "The photo has been well upladed"
+#: ./browser/ldap/jpegPhoto.py:178
+msgid "The photo can't be uploaded"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:59
+#: ./browser/ldap/jpegPhoto.py:175
+msgid "The photo has been well uploaded"
+msgstr ""
+
+#: ./browser/ldap/jpegPhoto.py:125
 msgid "The unique ID of the ldap entry."
 msgstr ""
 
@@ -149,16 +157,28 @@ msgstr ""
 msgid "Title of the rendered portlet"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:58
+#: ./browser/ldap/jpegPhoto.py:124
 msgid "Unique ID"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:72
+#: ./browser/ldap/jpegPhoto.py:138
 msgid "Upload"
 msgstr ""
 
-#: ./browser/ldap/jpegPhoto.py:54
+#: ./browser/ldap/jpegPhoto.py:120
 msgid "Upload a jpeg photo."
+msgstr ""
+
+#: ./profiles/default/controlpanel.xml
+msgid "collective.portlet.contact Settings"
+msgstr ""
+
+#: Install profile title in configure.zcml
+msgid "collective.portlet.contact default profile"
+msgstr ""
+
+#: Uninstall profile title in configure.zcml
+msgid "collective.portlet.contact uninstall profile"
 msgstr ""
 
 #. Default: "A portlet which can display a contact."
@@ -167,72 +187,111 @@ msgid "description_contact_portlet"
 msgstr ""
 
 #. Default: "The DN of a manager account in the LDAP directory. This must be allowed to access all user informations."
-#: ./browser/ldap/controlpanel.py:32
+#: ./browser/ldap/controlpanel.py:49
 msgid "help_ldap_bind_dn"
 msgstr ""
 
 #. Default: "Password to use when binding to the LDAP server."
-#: ./browser/ldap/controlpanel.py:39
+#: ./browser/ldap/controlpanel.py:56
 msgid "help_ldap_bind_password"
 msgstr ""
 
+#. Default: "This photo will be used if the contact has no associated photo."
+#: ./browser/ldap/controlpanel.py:77
+msgid "help_ldap_default_photo_path"
+msgstr ""
+
+#: ./browser/ldap/controlpanel.py:98
+msgid "help_ldap_photo_cache_maxage"
+msgstr ""
+
+#. Default: "If the selected photo backend is OFS then this directory should contains one ATImage photo for each contact, for example an image with the id \"sbo\" for the contact uid=sbo."
+#: ./browser/ldap/controlpanel.py:91
+msgid "help_ldap_photo_ofs_directory"
+msgstr ""
+
+#. Default: "Photo storage backend used to retrieve the contact's photo: LDAP (jpg image from the LDAP contact) or OFS (i.e. a Plone folder containing one ATImage image for each contact, for example an image with the id 'sbo' for the contact uid=sbo)"
+#: ./browser/ldap/controlpanel.py:83
+msgid "help_ldap_photo_storage"
+msgstr ""
+
 #. Default: "This is the location in your LDAP directory where all users are stored."
-#: ./browser/ldap/controlpanel.py:45
+#: ./browser/ldap/controlpanel.py:62
 msgid "help_ldap_search_base"
 msgstr ""
 
 #. Default: "The address or hostname of the LDAP server."
-#: ./browser/ldap/controlpanel.py:20
+#: ./browser/ldap/controlpanel.py:37
 msgid "help_ldap_server"
 msgstr ""
 
 #. Default: "The system port of the LDAP server."
-#: ./browser/ldap/controlpanel.py:26
+#: ./browser/ldap/controlpanel.py:43
 msgid "help_ldap_server_port"
 msgstr ""
 
 #. Default: "If True the LDAP server will search for users0 directly in the user base location and will also look in subfolders of the user base location."
-#: ./browser/ldap/controlpanel.py:52
+#: ./browser/ldap/controlpanel.py:69
 msgid "help_search_recursive"
 msgstr ""
 
 #. Default: "Cancel"
-#: ./browser/controlpanel.py:74
+#: ./browser/controlpanel.py:79
 msgid "label_cancel"
 msgstr ""
 
 #. Default: "Bind DN"
-#: ./browser/ldap/controlpanel.py:30
+#: ./browser/ldap/controlpanel.py:47
 msgid "label_ldap_bind_dn"
 msgstr ""
 
 #. Default: "Bind password"
-#: ./browser/ldap/controlpanel.py:37
+#: ./browser/ldap/controlpanel.py:54
 msgid "label_ldap_bind_password"
 msgstr ""
 
+#. Default: "Path to a default photo (ATImage) in your Plone site (ex: images/contact-photo.jpg)"
+#: ./browser/ldap/controlpanel.py:75
+msgid "label_ldap_default_photo_path"
+msgstr ""
+
+#. Default: "For photos caching, used by the Cache-Control max-age request header. In seconds."
+#: ./browser/ldap/controlpanel.py:96
+msgid "label_ldap_photo_cache_maxage"
+msgstr ""
+
+#. Default: "Path to a Plone folder used to retrieve the contact's ATImage photo (used if selected backend is OFS)"
+#: ./browser/ldap/controlpanel.py:89
+msgid "label_ldap_photo_ofs_directory"
+msgstr ""
+
+#. Default: "Photo storage backend used to retrieve the contact's photo: LDAP or OFS"
+#: ./browser/ldap/controlpanel.py:81
+msgid "label_ldap_photo_storage"
+msgstr ""
+
 #. Default: "Base DN for contacts"
-#: ./browser/ldap/controlpanel.py:43
+#: ./browser/ldap/controlpanel.py:60
 msgid "label_ldap_search_base"
 msgstr ""
 
 #. Default: "LDAP server"
-#: ./browser/ldap/controlpanel.py:18
+#: ./browser/ldap/controlpanel.py:35
 msgid "label_ldap_server"
 msgstr ""
 
 #. Default: "LDAP port"
-#: ./browser/ldap/controlpanel.py:24
+#: ./browser/ldap/controlpanel.py:41
 msgid "label_ldap_server_port"
 msgstr ""
 
 #. Default: "Save"
-#: ./browser/controlpanel.py:63
+#: ./browser/controlpanel.py:68
 msgid "label_save"
 msgstr ""
 
 #. Default: "Search recursively for contacts"
-#: ./browser/ldap/controlpanel.py:50
+#: ./browser/ldap/controlpanel.py:67
 msgid "label_search_recursive"
 msgstr ""
 
@@ -244,15 +303,5 @@ msgstr ""
 #. Default: "Edit contact text portlet"
 #: ./portlet/contact.py:120
 msgid "title_edit_contact_portlet"
-msgstr ""
-
-#. Default: "Path to a default photo (ATImage) in your Plone site (ex: images/contact-photo.jpg)"
-#: ./browser/ldap/controlpanel.py:58
-msgid "label_ldap_default_photo_path"
-msgstr ""
-
-#. Default: "This photo will be used if the LDAP contact has no associated photo."
-#: ./browser/ldap/controlpanel.py:60
-msgid "help_ldap_default_photo_path"
 msgstr ""
 

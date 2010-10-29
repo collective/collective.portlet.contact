@@ -4,6 +4,8 @@ from zope import schema
 from zope.interface import Interface, implements
 from zope.component import adapts
 from zope.formlib import form
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
+
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 
 from Products.CMFDefault.formlib.schema import SchemaAdapterBase
@@ -16,6 +18,17 @@ except ImportError:
     _template = ControlPanelForm.template
 
 from collective.portlet.contact.i18n import MessageFactory as _
+
+def _createPhotoBackendVocabulary():
+    """ Create zope.schema vocabulary from available photo backends.
+    @return: Iterable of SimpleTerm objects
+    """
+    for backend in ['ldap', 'ofs']:
+        term = SimpleTerm(value=backend, token=backend, title=backend)
+        yield term
+
+photo_backend_vocabulary = SimpleVocabulary(list(_createPhotoBackendVocabulary()))
+
 
 class IPortletContactLdapControlPanel(Interface):
 
@@ -38,7 +51,7 @@ class IPortletContactLdapControlPanel(Interface):
                                               'This must be allowed to access all user informations.'),
                                 required=True)
 
-    ldap_bind_password = schema.ASCIILine(title=_(u'label_ldap_bind_password',
+    ldap_bind_password = schema.Password(title=_(u'label_ldap_bind_password',
                                         default=u'Bind password'),
                                 description=_(u'help_ldap_bind_password',
                                               default=u'Password to use when binding to the LDAP server.'),
@@ -62,9 +75,31 @@ class IPortletContactLdapControlPanel(Interface):
     ldap_default_photo_path = schema.ASCIILine(title=_(u'label_ldap_default_photo_path',
                                         default=u'Path to a default photo (ATImage) in your Plone site (ex: images/contact-photo.jpg)'),
                                 description=_(u'help_ldap_default_photo_path',
-                                              default=u'This photo will be used if the LDAP contact has no associated photo.'),
+                                              default=u'This photo will be used if the contact has no associated photo.'),
                                 required=True)
-
+    
+    ldap_photo_storage = schema.Choice(title=_(u'label_ldap_photo_storage',
+                                        default=u"Photo storage backend used to retrieve the contact's photo: LDAP or OFS"),
+                                description=_(u'help_ldap_photo_storage',
+                                              default=u"Photo storage backend used to retrieve the contact's photo: LDAP (jpg image from the LDAP contact) or OFS (i.e. a Plone folder "
+                                                       "containing one ATImage image for each contact, for example an image with the id 'sbo' for the contact uid=sbo)"),
+                                required=True,
+                                vocabulary=photo_backend_vocabulary)
+    
+    ldap_photo_ofs_directory = schema.ASCIILine(title=_(u'label_ldap_photo_ofs_directory',
+                                        default=u"Path to a Plone folder used to retrieve the contact's ATImage photo (used if selected backend is OFS)"),
+                                description=_(u'help_ldap_photo_ofs_directory',
+                                              default=u'If the selected photo backend is OFS then this directory should contains one ATImage photo for '
+                                                       'each contact, for example an image with the id "sbo" for the contact uid=sbo.'),
+                                required=True)
+    
+    ldap_photo_cache_maxage = schema.ASCIILine(title=_(u'label_ldap_photo_cache_maxage',
+                                        default=u'For photos caching, used by the Cache-Control max-age request header. In seconds.'),
+                                description=_(u'help_ldap_photo_cache_maxage',
+                                              default=u''),
+                                required=True)
+    
+    
 class PortletContactLdapControlPanelAdapter(SchemaAdapterBase):
 
     adapts(IPloneSiteRoot)
@@ -116,7 +151,26 @@ class PortletContactLdapControlPanelAdapter(SchemaAdapterBase):
     def getDefaultPhotoPath(self):
         return self.props.ldap_default_photo_path
     ldap_default_photo_path = property(getDefaultPhotoPath, setDefaultPhotoPath)
-
+    
+    def setPhotoStorage(self, value):
+        self.props.manage_changeProperties(ldap_photo_storage=value)
+    def getPhotoStorage(self):
+        return self.props.ldap_photo_storage
+    ldap_photo_storage = property(getPhotoStorage, setPhotoStorage)
+    
+    def setPhotoOfsDirectory(self, value):
+        self.props.manage_changeProperties(ldap_photo_ofs_directory=value)
+    def getPhotoOfsDirectory(self):
+        return self.props.ldap_photo_ofs_directory
+    ldap_photo_ofs_directory = property(getPhotoOfsDirectory, setPhotoOfsDirectory)
+    
+    def setPhotoCacheMaxAge(self, value):
+        self.props.manage_changeProperties(ldap_photo_cache_maxage=value)
+    def getPhotoCacheMaxAge(self):
+        return self.props.ldap_photo_cache_maxage
+    ldap_photo_cache_maxage = property(getPhotoCacheMaxAge, setPhotoCacheMaxAge)
+    
+    
 class PortletContactLdapControlPanel(ControlPanelForm):
     """ collective.portlet.contact LDAP Control Panel Form """
 

@@ -20,6 +20,12 @@ Requirements
 
 See docs/INSTALL.txt for installation instructions.
 
+Possible problems
+------------
+
+  * I have the following error: "We already have: zope.schema 3.5.4 but z3c.form 2.4.1 requires 'zope.schema>=3.6.0'."
+    => You should add this extra version restriction to your buildout: http://good-py.appspot.com/release/plone.app.z3cform/0.5.0
+
 Credits
 =======
 

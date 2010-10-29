@@ -8,7 +8,7 @@ from zope.schema.interfaces import IVocabularyFactory
 from collective.portlet.contact.interfaces import IPortletContactUtility
 
 class PortletContactUtilities(SimpleVocabulary):
-    """A vocabulary if portlet contact utility names."""
+    """A vocabulary containing portlet contact utility names."""
     
     classProvides(IVocabularyFactory)
     
@@ -18,4 +18,3 @@ class PortletContactUtilities(SimpleVocabulary):
         for name, utility in utilities:
             terms.append(SimpleTerm(name, name, name))
         super(PortletContactUtilities, self).__init__(terms)
-        
