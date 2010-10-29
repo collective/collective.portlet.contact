@@ -16,7 +16,7 @@ Requirements
 ------------
 
   * python-ldap if you want to use the LDAP backend
-  * tested with Plone 3.3.5
+  * tested with Plone 3.3.5, Plone 4.0
 
 See docs/INSTALL.txt for installation instructions.
 
