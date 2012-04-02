@@ -22,7 +22,7 @@ setup(
     namespace_packages=['collective', 'collective.portlet',],
     version=version,
     description='Display LDAP contacts in Plone portlets.',
-    long_description=open("README.txt").read() + "\n" +
+    long_description=open("README.rst").read() + "\n" +
                      open(os.path.join("docs", "HISTORY.txt")).read(),
     classifiers=classifiers,
     keywords='plone portlet ldap contact',
