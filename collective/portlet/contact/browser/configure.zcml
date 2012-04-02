@@ -30,10 +30,24 @@
 
   <!-- DUMMY utility and control-panel page -->
   <include package=".dummy" />
-		   
+
   <!-- LDAP utility and control-panel page -->
   <include package=".ldap"
            zcml:condition="installed ldap" />
 
+  <configure zcml:condition="not-installed ldap">
+    <browser:page
+      name="collective_portlet_contact_photo"
+      for="*"
+      class=".jpegPhoto.jpegPhoto"
+      permission="zope2.View"
+      />
+    <browser:page
+      name="collective_portlet_contact_photo_form"
+      for="*"
+      class=".jpegPhoto.Page"
+      permission="cmf.ManagePortal"
+    />
+  </configure>
 </configure>
 

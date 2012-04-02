@@ -85,7 +85,7 @@ class PortletContactLdap:
                                 limit=1)
         if contacts:
             c = contacts[0]
-            jpegurl = urltool() + '/@@ldapJpegPhoto?uid='+c['datas']['uid']
+            jpegurl = urltool() + '/@@collective_portlet_contact_photo?uid='+c['datas']['uid']
             return {'fullname': c['datas']['cn'],
                     'phonenumber': c['datas']['telephoneNumber'],
                     'mail': encode_email(c['datas']['mail'],

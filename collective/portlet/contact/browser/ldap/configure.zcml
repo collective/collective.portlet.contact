@@ -19,13 +19,13 @@
       permission="cmf.ManagePortal"
       />
   <browser:page
-      name="ldapJpegPhoto"
+      name="collective_portlet_contact_photo"
       for="*"
       class=".jpegPhoto.jpegPhoto"
       permission="zope2.View"
       />
   <browser:page
-      name="ldapJpegPhoto.form"
+      name="collective_portlet_contact_photo_form"
       for="*"
       class=".jpegPhoto.Page"
       permission="cmf.ManagePortal"

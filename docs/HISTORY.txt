@@ -4,8 +4,9 @@ Change History
 1.0b4 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- move @@ldapJpegPhoto view to collective_portlet_contact_photo view and make it
+  works with and without ldap.
+  [toutpt]
 
 1.0b3 (2010-10-30)
 ------------------
