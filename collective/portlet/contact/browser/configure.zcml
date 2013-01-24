@@ -27,6 +27,13 @@
       class=".searcher.ContactSearchView"
       allowed_attributes="search"
     />
+  <browser:page
+      for="*"
+      name="collective.portlet.contact.ajax"
+      permission="zope2.View"
+      class=".contact_view.ContactView"
+      template="contact_view.pt"
+    />
 
   <!-- DUMMY utility and control-panel page -->
   <include package=".dummy" />

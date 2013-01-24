@@ -4,6 +4,7 @@
  <object name="portlet_contact_properties" meta_type="Plone Property Sheet">
     <property name="title">collective.portlet.contact Main properties</property>
     <property name="backend" type="string">dummy</property>
+    <property name="ajax" type="boolean">False</property>
 
     <property name="ldap_server_host" type="string">ldap.mydomain.com</property>
     <property name="ldap_server_port" type="int">389</property>

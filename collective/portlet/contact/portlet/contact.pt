@@ -12,24 +12,34 @@
         <span class="portletTopRight"></span>
     </dt>
 
-    <dd class="portletItem odd" itemscope itemtype="http://schema.org/Person">
-        <img itemprop="image" tal:attributes="src python:contact['photourl']" width="50"/>
-        
-        <div id="fullname" tal:define="fullname python:contact['fullname']"
-             tal:condition="fullname" itemprop="name"
-             tal:content="structure fullname" />
-        
-        <div id="employeetype" tal:define="employeetype python:contact['employeetype']"
-             tal:condition="employeetype" itemprop="jobTitle"
-             tal:content="structure employeetype" />
-        
-        <div id="mail" tal:define="mail python:contact['mail']"
-             tal:condition="mail" itemprop="email"
-             tal:content="structure mail" />
-        
-        <div id="phonenumber" tal:define="phonenumber python:contact['phonenumber']"
-             tal:condition="phonenumber" itemprop="telephone"
-             tal:content="structure phonenumber" />
+    <dd class="portletItem odd" itemscope itemtype="http://schema.org/Person" tal:condition="view/load_ajax">
+      <a tal:attributes="href string:${view/portlet_url}/@@collective.portlet.contact.ajax; id view/data/id">contact</a>
+        <script type="text/javascript" tal:content="structure string:$(document).ready(function(){
+        $.ajax({url: '${view/portlet_url}/@@collective.portlet.contact.ajax',
+                success: function ( data ) {
+                console.log(data);
+                    $('#${view/data/id}').replaceWith(data);
+                }
+               });
+        });"></script>
     </dd>
-
+    <dd class="portletItem odd" itemscope itemtype="http://schema.org/Person" tal:condition="not:view/load_ajax">
+	  <img itemprop="image" tal:attributes="src python:contact['photourl']" width="50"/>
+	
+	  <div id="fullname" tal:define="fullname python:contact['fullname']"
+	       tal:condition="fullname" itemprop="name"
+	       tal:content="structure fullname" />
+	
+	  <div id="employeetype" tal:define="employeetype python:contact['employeetype']"
+	       tal:condition="employeetype" itemprop="jobTitle"
+	       tal:content="structure employeetype" />
+	
+	  <div id="mail" tal:define="mail python:contact['mail']"
+	       tal:condition="mail" itemprop="email"
+	       tal:content="structure mail" />
+	
+	  <div id="phonenumber" tal:define="phonenumber python:contact['phonenumber']"
+	       tal:condition="phonenumber" itemprop="telephone"
+	       tal:content="structure phonenumber" />
+    </dd>
 </dl>

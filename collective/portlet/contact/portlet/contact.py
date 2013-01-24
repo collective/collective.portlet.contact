@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from zope import component
 from zope import schema
 from zope.interface import implements
 from zope.formlib import form
@@ -7,13 +8,16 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
 from plone.memoize.compress import xhtml_compress
 from plone.memoize.instance import memoize
-from plone.portlets.interfaces import IPortletDataProvider
+from plone.portlets.interfaces import IPortletDataProvider, IPortletRetriever
 from plone.app.portlets.portlets import base
 
 from collective.portlet.contact.i18n import MessageFactory as _
 from collective.portlet.contact.utils import getPortletContactUtility
 
 from zope.app.form.browser.textwidgets import TextWidget
+from Products.CMFCore.utils import getToolByName
+PORTLET_PATH = "%(context_path)s/++%(category)sportlets++%(manager)s/%(id)s"
+
 
 class AutocompleteContactTextWidget(TextWidget):
 
@@ -41,6 +45,7 @@ class IContactPortlet(IPortletDataProvider):
     contact_id = schema.TextLine(title=_(u"Contact uniq id"),
                                  description=_(u"The contact uniq id."),
                                  required=True)
+
 
 class Assignment(base.Assignment):
     """
@@ -79,9 +84,46 @@ class Renderer(base.Renderer):
     @memoize
     def getContactInfo(self):
         """ get the contact informations the portlet is pointing to"""
+        if self.load_ajax():
+            return "ajax"  # not None
         uniq_id = self.data.contact_id
         utility = getPortletContactUtility(self.context)
         return utility.getContactInfos(self.context, uniq_id)
+
+    def portlet_url(self):
+        portlet_url = ""
+        portal_state = component.getMultiAdapter(
+            (self.context, self.request), name="plone_portal_state"
+        )
+        portal_url = portal_state.portal_url()
+        portal = portal_state.portal()
+        portal_path = '/'.join(portal.getPhysicalPath())
+        #http://stackoverflow.com/questions/11211134/how-do-i-get-the-kind-of-portlet-group-context-type-from-its-renderer-in-pl/11211893#11211893
+        retriever = component.getMultiAdapter(
+            (self.context, self.manager), IPortletRetriever
+        )
+        category = None
+        for info in retriever.getPortlets():
+            if info['assignment'] is self.data.aq_base:
+                category = info['category']
+                key = info['key']
+                break
+        if category is not None:
+            path = key[len(portal_path)+1:]
+            info = {'category': category,
+                    'id': '%s' % self.data.id,
+                    'manager': self.manager.__name__,
+                    'context_path': path}
+            portlet_url = '%s/%s' % (portal_url, PORTLET_PATH % info)
+        return portlet_url
+
+    def load_ajax(self):
+        """return True if the portlet should be load in ajax"""
+        pp = getToolByName(self.context, 'portal_properties')
+        if hasattr(pp.portlet_contact_properties, 'ajax'):
+            return pp.portlet_contact_properties.ajax
+        return False
+
 
 class AddForm(base.AddForm):
     """Portlet add form.

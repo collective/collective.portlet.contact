@@ -1,0 +1,24 @@
+<tal:block tal:define="contact view/contact_info">
+ <tal:if tal:condition="contact|nothing">
+  <img itemprop="image" tal:attributes="src python:contact['photourl']" width="50"/>
+
+  <div id="fullname" tal:define="fullname python:contact['fullname']"
+       tal:condition="fullname" itemprop="name"
+       tal:content="structure fullname" />
+
+  <div id="employeetype" tal:define="employeetype python:contact['employeetype']"
+       tal:condition="employeetype" itemprop="jobTitle"
+       tal:content="structure employeetype" />
+
+  <div id="mail" tal:define="mail python:contact['mail']"
+       tal:condition="mail" itemprop="email"
+       tal:content="structure mail" />
+
+  <div id="phonenumber" tal:define="phonenumber python:contact['phonenumber']"
+       tal:condition="phonenumber" itemprop="telephone"
+       tal:content="structure phonenumber" />
+ </tal:if>
+ <tal:else  tal:condition="not:contact" i18n:translate="">
+   No information about this contact
+ </tal:else>
+</tal:block>

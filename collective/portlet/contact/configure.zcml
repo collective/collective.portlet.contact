@@ -12,6 +12,7 @@
   <include package="plone.app.z3cform" />
   <include package=".browser" />
   <include package=".portlet" />
+  <include file="upgrades.zcml" />
 
   <utility
     provides="zope.schema.interfaces.IVocabularyFactory"

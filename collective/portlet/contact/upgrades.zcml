@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:gs="http://namespaces.zope.org/genericsetup"
+    i18n_domain="collective.portlet.contact">
+
+  <gs:upgradeStep
+    title="Common upgrade"
+    description="apply profile"
+    source="*"
+    destination="2"
+    handler=".upgrades.common"
+    profile="collective.portlet.contact:default"/>
+
+</configure>
