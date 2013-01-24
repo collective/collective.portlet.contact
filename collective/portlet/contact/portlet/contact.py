@@ -6,7 +6,7 @@ from zope.interface import implements
 from zope.formlib import form
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
-from plone.memoize.compress import xhtml_compress
+#from plone.memoize.compress import xhtml_compress
 from plone.memoize.instance import memoize
 from plone.portlets.interfaces import IPortletDataProvider, IPortletRetriever
 from plone.app.portlets.portlets import base
@@ -29,7 +29,8 @@ class AutocompleteContactTextWidget(TextWidget):
     def __call__(self):
         html = super(AutocompleteContactTextWidget, self).__call__()
         return html + self.autocomplete()
-    
+
+
 class IContactPortlet(IPortletDataProvider):
     """A portlet which renders the results of a contact search.
     """
@@ -41,7 +42,7 @@ class IContactPortlet(IPortletDataProvider):
     contact = schema.TextLine(title=_(u"Contact"),
                               description=_(u"The contact to display."),
                               required=True)
-    
+
     contact_id = schema.TextLine(title=_(u"Contact uniq id"),
                                  description=_(u"The contact uniq id."),
                                  required=True)
@@ -49,7 +50,7 @@ class IContactPortlet(IPortletDataProvider):
 
 class Assignment(base.Assignment):
     """
-    Portlet assignment.    
+    Portlet assignment.
     This is what is actually managed through the portlets UI and associated
     with columns.
     """
@@ -71,9 +72,10 @@ class Assignment(base.Assignment):
         """
         return self.header
 
+
 class Renderer(base.Renderer):
     """Portlet renderer.
-    
+
     This is registered in configure.zcml. The referenced page template is
     rendered, and the implicit variable 'view' will refer to an instance
     of this class. Other methods can be added and referenced in the template.
@@ -98,18 +100,20 @@ class Renderer(base.Renderer):
         portal_url = portal_state.portal_url()
         portal = portal_state.portal()
         portal_path = '/'.join(portal.getPhysicalPath())
-        #http://stackoverflow.com/questions/11211134/how-do-i-get-the-kind-of-portlet-group-context-type-from-its-renderer-in-pl/11211893#11211893
+
         retriever = component.getMultiAdapter(
             (self.context, self.manager), IPortletRetriever
         )
         category = None
+
         for info in retriever.getPortlets():
             if info['assignment'] is self.data.aq_base:
                 category = info['category']
                 key = info['key']
                 break
+
         if category is not None:
-            path = key[len(portal_path)+1:]
+            path = key[len(portal_path) + 1:]
             info = {'category': category,
                     'id': '%s' % self.data.id,
                     'manager': self.manager.__name__,
@@ -132,7 +136,7 @@ class AddForm(base.AddForm):
     zope.formlib which fields to display. The create() method actually
     constructs the assignment that is being added.
     """
-    
+
     form_fields = form.Fields(IContactPortlet)
     form_fields['contact'].custom_widget = AutocompleteContactTextWidget
 
@@ -140,7 +144,7 @@ class AddForm(base.AddForm):
               default=u"Add contact portlet")
     description = _(u"description_contact_portlet",
                     default=u"A portlet which can display a contact.")
-    
+
     def setUpWidgets(self, ignore_request=False):
         super(AddForm, self).setUpWidgets(ignore_request=ignore_request)
         self.widgets['contact'].displayWidth = 50
@@ -149,21 +153,22 @@ class AddForm(base.AddForm):
     def create(self, data):
         return Assignment(**data)
 
+
 class EditForm(base.EditForm):
     """Portlet edit form.
 
     This is registered with configure.zcml. The form_fields variable tells
     zope.formlib which fields to display.
     """
-    
+
     form_fields = form.Fields(IContactPortlet)
     form_fields['contact'].custom_widget = AutocompleteContactTextWidget
-    
+
     label = _(u"title_edit_contact_portlet",
               default=u"Edit contact text portlet")
     description = _(u"description_contact_portlet",
                     default=u"A portlet which can display a contact.")
-    
+
     def setUpWidgets(self, ignore_request=False):
         super(EditForm, self).setUpWidgets(ignore_request=ignore_request)
         self.widgets['contact'].displayWidth = 50

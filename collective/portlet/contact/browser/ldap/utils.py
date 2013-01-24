@@ -2,6 +2,7 @@
 
 import ldap
 
+
 class LdapServer(object):
 
     def __init__(self, host, port, dn, credential, base, scope):
@@ -15,9 +16,10 @@ class LdapServer(object):
 
     def connect(self):
         try:
-            self.l = ldap.initialize('ldap://%s:%s' % (self.host, str(self.port)))
+            init = 'ldap://%s:%s' % (self.host, str(self.port))
+            self.l = ldap.initialize(init)
             self.l.simple_bind_s(self.dn, self.credential)
-        except ldap.LDAPError, error_message:
+        except ldap.LDAPError:
             # Couldn't connect
             self.l = None
 
@@ -32,18 +34,20 @@ class LdapServer(object):
         res = []
 
         try:
-            entries = self.l.search_s(self.base, self.scope, 
-                                      filter, attrlist=None)
+            entries = self.l.search_s(
+                self.base, self.scope,
+                filter, attrlist=None
+            )
 
             for entry in entries:
-                
+
                 ldap_path, contact = entry[0], entry[1]
-                
+
                 _attrs = attrs
                 if attrs is None:
                     # return all attributes
                     _attrs = contact.keys()
-                
+
                 d = {}
                 for attr in _attrs:
                     value = contact.get(attr, [None])

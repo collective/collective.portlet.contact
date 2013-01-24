@@ -8,7 +8,7 @@ logger = logging.getLogger('collective.portlet.contact')
 
 class ContactView(BrowserView):
     """Contact view"""
-    
+
     def __init__(self, context, request):
         self.context = context  # portlet assignement
         self.request = request

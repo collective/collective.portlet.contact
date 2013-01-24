@@ -23,12 +23,16 @@ from Products.statusmessages.interfaces import IStatusMessage
 
 from collective.portlet.contact.i18n import MessageFactory as _
 
+
 class IPortletContactControlPanel(Interface):
 
-    backend = schema.Choice(title=_(u'Back-end'),
-                            description=_(u'Select the back-end for the Contact portlets.'),
-                            vocabulary='collective.portlet.contact.utilities',
-                            required=True)
+    backend = schema.Choice(
+        title=_(u'Back-end'),
+        description=_(u'Select the back-end for the Contact portlets.'),
+        vocabulary='collective.portlet.contact.utilities',
+        required=True
+    )
+
 
 class PortletContactControlPanelAdapter(SchemaAdapterBase):
 
@@ -39,13 +43,15 @@ class PortletContactControlPanelAdapter(SchemaAdapterBase):
         super(PortletContactControlPanelAdapter, self).__init__(context)
         portal_properties = getToolByName(self.context, 'portal_properties')
         self.props = getattr(portal_properties, 'portlet_contact_properties')
-        
+
     def setBackend(self, value):
         self.props.manage_changeProperties(backend=value)
+
     def getBackend(self):
         return self.props.backend
     backend = property(getBackend, setBackend)
-        
+
+
 class PortletContactControlPanel(ControlPanelForm):
     """ collective.portlet.contact Control Panel Form """
 
@@ -70,7 +76,8 @@ class PortletContactControlPanel(ControlPanelForm):
         CheckAuthenticator(self.request)
         if form.applyChanges(self.context, self.form_fields, data,
                              self.adapters):
-            self.status = _("Changes saved, you can now configure the back-end.")
+            status = _("Changes saved, you can now configure the back-end.")
+            self.status = status
             notify(ConfigurationChangedEvent(self, data))
             self._on_save(data)
         else:
@@ -85,9 +92,7 @@ class PortletContactControlPanel(ControlPanelForm):
         url = getMultiAdapter((self.context, self.request),
                               name='absolute_url')()
         self.request.response.redirect(url + '/plone_control_panel')
-        return 
 
     @form.action(_(u'Configure the back-end'), validator=null_validator)
     def handle_go_to_backend(self, action, data):
-       self._redirectToBackend()
-        
+        self._redirectToBackend()

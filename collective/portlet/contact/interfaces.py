@@ -2,6 +2,7 @@
 
 from zope.interface import Interface
 
+
 class IPortletContactUtility(Interface):
     """ Contact utility """
 
@@ -16,7 +17,7 @@ class IPortletContactUtility(Interface):
         """ Return informations (dict) on the contact pointed by uniq_id.
             * context: the current context
             * uniq_id: a value which allows to retrieve the contact
-            
+
             The dict must have the keys:
             * fullname
             * phonenumber

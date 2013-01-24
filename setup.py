@@ -1,13 +1,7 @@
-import os, sys
-
+import os
 from setuptools import setup, find_packages
 
 version = '1.1.dev0'
-
-def read(*rnames):
-    return open(
-        os.path.join('.', *rnames)
-    ).read()
 
 classifiers = [
     "Framework :: Plone",
@@ -15,11 +9,12 @@ classifiers = [
     "Programming Language :: Python",
     "License :: OSI Approved :: GNU General Public License (GPL)",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
-    "Topic :: Software Development :: Libraries :: Python Modules",]
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    ]
 
 setup(
     name='collective.portlet.contact',
-    namespace_packages=['collective', 'collective.portlet',],
+    namespace_packages=['collective', 'collective.portlet', ],
     version=version,
     description='Display LDAP contacts in Plone portlets.',
     long_description=open("README.rst").read() + "\n" +
@@ -38,6 +33,7 @@ setup(
         # -*- Extra requirements: -*-
         'plone.app.z3cform'
     ],
+    extras_require=dict(test=['plone.app.testing', 'pyquery', 'fakeldap']),
     # define there your console scripts
     entry_points="""
     # -*- Entry points: -*-

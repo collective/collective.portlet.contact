@@ -7,11 +7,12 @@ from zope.schema.interfaces import IVocabularyFactory
 
 from collective.portlet.contact.interfaces import IPortletContactUtility
 
+
 class PortletContactUtilities(SimpleVocabulary):
     """A vocabulary containing portlet contact utility names."""
-    
+
     classProvides(IVocabularyFactory)
-    
+
     def __init__(self, context):
         terms = []
         utilities = getUtilitiesFor(IPortletContactUtility)
