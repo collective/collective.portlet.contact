@@ -24,7 +24,7 @@ class IntegrationTestControlPanel(base.IntegrationTestCase):
         self.assertIsNotNone(view)
         html = view.render()
         pq = PyQuery(html)
-        backend = pq('.widget select')
+        backend = pq('#form\\.backend')
         self.assertEqual(len(backend), 1)
         values = backend.children()
         self.assertEqual(len(values), 2)
