@@ -3,22 +3,26 @@ Introduction
 
 Display a contact in a Plone portlet.
 
-Two backends are provided, thez are responsible to retrieve the contact's 
-informations:
+Contacts are provided throw backends. When installed this addon is configured
+to use the 'dummy' backend.
+
+You can configure this addon to use an other backend:
 
 * Dummy backend, used for tests
-* LDAP backend 
+* LDAP backend (add python-ldap in your setup)
+* SugarCRM backend (add the addon collective.sugarcrm)
 
 Installation
 ============
 
-Requirements
-------------
+.. image:: https://secure.travis-ci.org/collective/collective.js.galleria.png
+    :target: http://travis-ci.org/collective/collective.js.galleria
 
-* python-ldap if you want to use the LDAP backend
-* tested with Plone 3.3.5, Plone 4.0
+This addon can be installed as installed as any other Plone addon, please
+follow the official documentation_.
 
-See docs/INSTALL.txt for installation instructions.
+.. _documentation: http://plone.org/documentation/kb/installing-add-ons-quick-how-to
+
 
 Possible problems
 -----------------
@@ -50,4 +54,3 @@ Contributors
 
 .. |makinacom| image:: http://depot.makina-corpus.org/public/logo.gif
 .. _makinacom:  http://www.makina-corpus.com
-  
