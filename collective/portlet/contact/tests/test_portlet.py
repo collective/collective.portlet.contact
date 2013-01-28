@@ -39,8 +39,8 @@ class IntegrationTestPortlet(IntegrationTestCase):
         for m in mapping.keys():
             del mapping[m]
         addview = mapping.restrictedTraverse('+/' + portlet.addview)
-
-        addview.createAndAdd(data={'header': u'Follow us'})
+        data = {'header': u'Dummy', 'contact_id': u'uniq_id'}
+        addview.createAndAdd(data=data)
 
         self.assertEquals(len(mapping), 1)
         self.assertIsInstance(mapping.values()[0], contact.Assignment)
@@ -62,7 +62,8 @@ class IntegrationTestPortlet(IntegrationTestCase):
                              name='plone.rightcolumn',
                              context=self.portal)
 
-        assignment = contact.Assignment(header="Follow us")
+        data = {'header': u'Dummy', 'contact_id': u'uniq_id'}
+        assignment = contact.Assignment(**data)
 
         renderer = getMultiAdapter(
             (context, request, view, manager, assignment),
@@ -86,14 +87,16 @@ class IntegrationTestRenderer(IntegrationTestCase):
             name='plone.rightcolumn',
             context=self.portal)
 
+        data = {'header': u'Dummy', 'contact_id': u'uniq_id'}
         assignment = assignment or \
-            contact.Assignment(header="Follow us")
+            contact.Assignment(**data)
         return getMultiAdapter((context, request, view, manager, assignment),
                                interfaces.IPortletRenderer)
 
     def test_render(self):
+        data = {'header': u'Dummy', 'contact_id': u'uniq_id'}
         r = self.renderer(context=self.portal,
-                          assignment=contact.Assignment())
+                          assignment=contact.Assignment(**data))
         r = r.__of__(self.folder)
         r.update()
         pq = PyQuery(r.render())

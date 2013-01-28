@@ -27,12 +27,19 @@ class DummyAddressBook(object):
         self.update()
         props = self.properties
         item_str = "%(fullname)s - %(mail)s|%(id)s"
-        return item_str % {'fullname': props.dummy_fullname,
-                           'mail': props.dummy_mail,
-                           'id': 'uniq_id'}
+        contact = item_str % {
+            'fullname': props.dummy_fullname,
+            'mail': props.dummy_mail,
+            'id': 'uniq_id'
+        }
+        if q in contact.lower():
+            return [contact][:int(limit)]
+        return []
 
     def getContactInfos(self, uniq_id):
         # Used by the portlet
+        if uniq_id != 'uniq_id':
+            return None
         self.update()
         props = self.properties
         return {'fullname': props.dummy_fullname,
