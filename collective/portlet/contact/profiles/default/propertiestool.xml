@@ -13,7 +13,7 @@
     <property name="ldap_search_base" type="string">ou=People,dc=mydomain,dc=com</property>
     <property name="ldap_search_recursive" type="boolean">False</property>
     <property name="ldap_default_photo_path" type="string">images/contact-photo.jpg</property>
-    <property name="ldap_photo_storage" type="string">ldap</property>
+    <property name="ldap_photo_storage" type="string">ofs</property>
     <property name="ldap_photo_ofs_directory" type="string">images</property><!-- required for the 'ofs' photo storage -->
     <property name="ldap_photo_cache_maxage" type="string">6000</property>
 

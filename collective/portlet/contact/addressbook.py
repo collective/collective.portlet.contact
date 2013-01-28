@@ -4,7 +4,6 @@ from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from zope.schema.interfaces import IVocabularyFactory
 
 from Products.CMFCore.utils import getToolByName
-from Products.Archetypes.interfaces.base import IBaseContent
 
 
 class IAddressBook(interface.Interface):

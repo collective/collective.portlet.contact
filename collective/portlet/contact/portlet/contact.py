@@ -14,7 +14,6 @@ from plone.app.portlets.portlets import base
 from collective.portlet.contact.i18n import MessageFactory as _
 
 from zope.app.form.browser.textwidgets import TextWidget
-from Products.CMFCore.utils import getToolByName
 from collective.portlet.contact.addressbook import IAddressBook
 PORTLET_PATH = "%(context_path)s/++%(category)sportlets++%(manager)s/%(id)s"
 
@@ -98,7 +97,7 @@ class Renderer(base.Renderer):
         self.update()
         return self.index()
 
-#    @memoize
+    @memoize
     def getContactInfo(self):
         """ get the contact informations the portlet is pointing to"""
         if self.load_ajax():

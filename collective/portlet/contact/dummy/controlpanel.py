@@ -20,25 +20,35 @@ from collective.portlet.contact.i18n import MessageFactory as _
 
 class IPortletContactDummyControlPanel(Interface):
 
-    dummy_fullname = schema.ASCIILine(title=_(u'Full name'),
-                                     description=_(u''),
-                                     required=False,)
+    dummy_fullname = schema.ASCIILine(
+        title=_(u'Full name'),
+        description=_(u''),
+        required=False,
+    )
 
-    dummy_phone = schema.ASCIILine(title=_(u'Phone'),
-                                     description=_(u''),
-                                     required=False,)
+    dummy_phone = schema.ASCIILine(
+        title=_(u'Phone'),
+        description=_(u''),
+        required=False,
+    )
 
-    dummy_mail = schema.ASCIILine(title=_(u'Mail'),
-                                     description=_(u''),
-                                     required=False,)
+    dummy_mail = schema.ASCIILine(
+        title=_(u'Mail'),
+        description=_(u''),
+        required=False,
+    )
 
-    dummy_employee_type = schema.ASCIILine(title=_(u'Employee Type'),
-                                           description=_(u''),
-                                           required=False,)
+    dummy_employee_type = schema.ASCIILine(
+        title=_(u'Employee Type'),
+        description=_(u''),
+        required=False,
+    )
 
-    dummy_photo_url = schema.ASCIILine(title=_(u'Photo URL'),
-                                     description=_(u''),
-                                     required=False,)
+    dummy_photo_url = schema.ASCIILine(
+        title=_(u'Photo URL'),
+        description=_(u''),
+        required=False,
+    )
 
 
 class PortletContactDummyControlPanelAdapter(SchemaAdapterBase):

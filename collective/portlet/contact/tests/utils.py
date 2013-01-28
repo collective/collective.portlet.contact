@@ -1,3 +1,6 @@
+from ZPublisher.tests.testPublish import Request, Response
+
+
 class FakeAcquisition(object):
     def __init__(self):
         self.aq_explicit = None
@@ -15,6 +18,7 @@ class FakeContext(object):
         self.aq_inner = FakeAcquisition()
         self.aq_inner.aq_explicit = self
         self._modified = "modified date"
+        self.messages = []
 
     def _old_generateNewId(self):
         return 'a-title'
@@ -46,6 +50,23 @@ class FakeContext(object):
     def getRemoteUrl(self):  # fake Link
         return self.remoteUrl
 
+    def plone_log(self, msg):
+        self.messages.append(msg)
+
+
+class FakeImage(object):
+    def __init__(self):
+        self.data = 'photo'
+
+
+class FakePortal(FakeContext):
+
+    def __init__(self):
+        self.data = {'images/uniq_id': FakeImage()}
+
+    def unrestrictedTraverse(self, key):
+        return self.data[key]
+
 
 class FakeSettings(object):
     def __init__(self):
@@ -57,6 +78,14 @@ class FakeSettings(object):
         self.dummy_employee_type = "Developer"
         photo = "++resource++collective-portlet-contact/defaultUser.png"
         self.dummy_photo_url = photo
+        #get_properties stuff
+        self.photo_storage = 'ofs'
+        self.default_photo_path = ''
+        self.photo_ofs_directory = 'images'
+        self.photo_cache_maxage = ''
+
+    def __getitem__(self, key):
+        return getattr(self, key)
 
 
 class FakeBackend(object):
@@ -68,3 +97,27 @@ class FakeBackend(object):
 
     def getContactInfos(self, uniq_id):
         return self.contacts[uniq_id]
+
+
+class RequestWithGet(Request):
+
+    def __init__(self):
+        Request.__init__(self)
+        self.form = {}
+        self.response = ResponseWithSet()
+
+    def get(self, a, b=''):
+        return self.form.get(a, b)
+
+
+class ResponseWithSet(Response):
+
+    def __init__(self):
+        self.headers = {}
+        self.content = ""
+
+    def setHeader(self, key, value):
+        self.headers[key] = value
+
+    def write(self, content):
+        self.content += content

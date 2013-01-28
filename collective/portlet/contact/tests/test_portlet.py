@@ -117,9 +117,9 @@ class IntegrationTestRenderer(IntegrationTestCase):
         script = mail.children()[0]
         self.assertEqual(script.tag, 'script')
         encoded = "eval(unescape('%64%6F%63%75%6D%65%6E%74%2E%77%72%69%74%65%"\
-        "28%27%3C%61%20%68%72%65%66%3D%22%6D%61%69%6C%74%6F%3A%66%6F%6F%40%62"\
-        "%61%72%2E%63%6F%6D%22%3E%66%6F%6F%40%62%61%72%2E%63%6F%6D%3C%2F%61%3"\
-        "E%27%29'))"
+            "28%27%3C%61%20%68%72%65%66%3D%22%6D%61%69%6C%74%6F%3A%66%6F%6F%4"\
+            "0%62%61%72%2E%63%6F%6D%22%3E%66%6F%6F%40%62%61%72%2E%63%6F%6D%3C"\
+            "%2F%61%3E%27%29'))"
         self.assertEqual(script.text, encoded)
         phone = pq('#phonenumber')
         self.assertEqual(phone.attr['itemprop'], 'telephone')

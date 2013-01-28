@@ -39,22 +39,37 @@ class jpegPhoto(BrowserView):
     def __init__(self, context, request):
         self.context = context
         self.request = request
+        self.settings = None
+        self.storage = None
+        self.portal = None
+
+    def update(self):
+        if self.settings is None:
+            self.settings = get_properties(self.context)
+        if self.storage is None:
+            self.storage = self.settings['photo_storage']
+        if self.portal is None:
+            urltool = getToolByName(self.context, 'portal_url')
+            self.portal = urltool.getPortalObject()
+
+    def getPhoto(self, uid):
+        accessor = getattr(self, 'getFrom_' + self.storage)
+        data = accessor(uid)
+        if not data:
+            data = self.getFrom_default(uid)
+        return data
 
     def __call__(self):
         request = self.request
         uid = request.get('uid', None)
         if not uid:
             return ''
-        config = get_properties(self.context)
-        storage = config['photo_storage']
-        accessor = getattr(self, 'getFrom_' + storage)
-        data = accessor(uid)
-        if not data:
-            data = self.getFrom_default(uid)
+        self.update()
+        data = self.getPhoto(uid)
 
         self.request.response.setHeader('Content-Type', 'image/jpeg')
         self.request.response.setHeader('Content-Length', len(data))
-        maxage = config['photo_cache_maxage']
+        maxage = self.settings['photo_cache_maxage']
         if maxage:
             maxage_str = 'max-age=%s' % maxage
             self.request.response.setHeader('Cache-Control', maxage_str)
@@ -62,11 +77,10 @@ class jpegPhoto(BrowserView):
 
     def getFrom_ofs(self, uid):
         data = ''
-        portal = getToolByName(self.context, 'portal_url').getPortalObject()
-        config = get_properties(self.context)
+        config = self.settings
         try:
             path = config['photo_ofs_directory'] + '/' + uid
-            photo = portal.unrestrictedTraverse(path)
+            photo = self.portal.unrestrictedTraverse(path)
         except AttributeError:
             photo = None
         except KeyError:
@@ -80,21 +94,20 @@ class jpegPhoto(BrowserView):
         raise NotImplementedError
 
     def getFrom_default(self, uid):
-        config = get_properties(self.context)
+        config = self.settings
         default_path = config['default_photo_path']
 
-        portal = getToolByName(self.context, 'portal_url').getPortalObject()
         try:
-            image = portal.unrestrictedTraverse(default_path)
+            image = self.portal.unrestrictedTraverse(default_path)
             data = image.data
         except AttributeError:
-            msg = 'No valid default photo provided for'
-            'collective.portlet.contact > LDAP backend'
+            msg = 'No valid default photo provided for'\
+                'collective.portlet.contact > LDAP backend'
             self.context.plone_log(msg)
             data = ''
         except KeyError:
-            msg = 'No valid default photo provided for '
-            'collective.portlet.contact > LDAP backend'
+            msg = 'No valid default photo provided for '\
+                'collective.portlet.contact > LDAP backend'
             self.context.plone_log(msg)
             data = ''
         return data
@@ -103,14 +116,16 @@ class jpegPhoto(BrowserView):
 class Schema(interface.Interface):
     """Schema to upload a photo to contact inside LDAP"""
 
-    photo = schema.Bytes(title=_(u'Photo'),
-                         description=_(u'Upload a jpeg photo.'),
-                         #max_length=800000
-                         )
+    photo = schema.Bytes(
+        title=_(u'Photo'),
+        description=_(u'Upload a jpeg photo.'),
+        #max_length=800000
+    )
 
-    uid = schema.TextLine(title=_(u'Unique ID'),
-                         description=_(u'The unique ID of the ldap entry.'),
-                         )
+    uid = schema.TextLine(
+        title=_(u'Unique ID'),
+        description=_(u'The unique ID of the ldap entry.'),
+    )
 
 
 class Form(form.Form):
@@ -128,7 +143,7 @@ class Form(form.Form):
         data, errors = self.extractData()
         if errors:
             return
-        config = get_properties(self.context)
+        config = self.settings
         storage = config['photo_storage']
         mutator = getattr(self, 'setPhoto_' + storage)
         mutator(data)
@@ -137,28 +152,30 @@ class Form(form.Form):
         photo_data = data['photo']
         content_type = self.widgets['photo'].value.headers['content-type']
         if content_type != 'image/jpeg':
-            raise form.interfaces.WidgetActionExecutionError(
-                   'photo', interface.Invalid(_(u'Is not a JPEG photo')))
+            error = interface.Invalid(_(u'Is not a JPEG photo'))
+            raise form.interfaces.WidgetActionExecutionError('photo', error)
         photo_file = StringIO()
         photo_file.write(photo_data)
         photo_id = str(data['uid'])
-        ofs_image = Image(photo_id, 'Photo for ' + data['uid'],
-                      photo_file, content_type='image/jpeg')
+        ofs_image = Image(
+            photo_id, 'Photo for ' + data['uid'],
+            photo_file, content_type='image/jpeg'
+        )
         portal = getToolByName(self.context, 'portal_url').getPortalObject()
-        config = get_properties(self.context)
+        config = self.settings
         try:
             path = config['photo_ofs_directory']
             container = portal.unrestrictedTraverse(path)
         except AttributeError:
-            msg = 'No valid Plone folder provided for'
-            'collective.portlet.contact > LDAP backend & '
-            'OFS backend for the photo'
+            msg = 'No valid Plone folder provided for'\
+                'collective.portlet.contact > LDAP backend & '\
+                'OFS backend for the photo'
             self.context.plone_log(msg)
             container = None
         except KeyError:
-            msg = 'No valid Plone folder provided for '
-            'collective.portlet.contact > LDAP backend &'
-            'OFS backend for the photo'
+            msg = 'No valid Plone folder provided for '\
+                'collective.portlet.contact > LDAP backend &'\
+                'OFS backend for the photo'
             self.context.plone_log(msg)
             container = None
 
@@ -185,6 +202,10 @@ class Form(form.Form):
 
     def update(self):
         super(Form, self).update()
+
+        if not hasattr(self, 'settings'):
+            self.settings = get_properties(self.context)
+
         if getattr(self, 'config', None):
             config = {}
             portal_properties = getToolByName(
