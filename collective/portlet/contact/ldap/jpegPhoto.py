@@ -2,7 +2,7 @@ import ldap
 from ldap import modlist
 
 from zope import interface
-from zope.component import getUtility
+from zope import component
 from z3c.form import form
 from Products.statusmessages.interfaces import IStatusMessage
 
@@ -10,9 +10,9 @@ from plone.app.z3cform import layout
 
 from collective.portlet.contact.browser.ldap.utils import LdapServer
 from collective.portlet.contact.browser import jpegPhoto as base
-from collective.portlet.contact.interfaces import IPortletContactUtility
 from collective.portlet.contact.i18n import MessageFactory as _
-from collective.portlet.contact.utils import getPropertySheet
+from Products.CMFCore.utils import getToolByName
+from collective.portlet.contact.addressbook import IAddressBook
 
 
 class jpegPhoto(base.jpegPhoto):
@@ -25,13 +25,9 @@ class jpegPhoto(base.jpegPhoto):
         self.request = request
 
     def getFrom_ldap(self, uid):
-        utility = getUtility(IPortletContactUtility, name='ldap')
+        book = component.getAdapter((self.context,), IAddressBook, name='ldap')
 
-        entries = utility._search(
-            self.context, search_on='uid',
-            attrs=['jpegPhoto'],
-            query=uid
-        )
+        entries = book._search(search_on='uid', attrs=['jpegPhoto'], query=uid)
 
         has_ldap_photo = len(entries) > 0 \
             and entries[0]['datas']['jpegPhoto'] is not None
@@ -76,7 +72,8 @@ class Form(base.Form):
 
     def getLDAPConfig(self):
         config = {}
-        pp = getPropertySheet(self.context)
+        portal_properties = getToolByName(self.context, 'portal_properties')
+        pp = portal_properties.portlet_contact_properties
         config['host'] = pp.ldap_server_host
         config['port'] = pp.ldap_server_port
         config['user'] = pp.ldap_bind_dn
@@ -95,7 +92,8 @@ class Page(layout.FormWrapper):
 
 
 def _setPhoto_ldap(context, uid, photo):
-    props = getPropertySheet(context)
+    portal_properties = getToolByName(context, 'portal_properties')
+    props = portal_properties.portlet_contact_properties
 
     if props.ldap_search_recursive:
         SCOPE = ldap.SCOPE_SUBTREE

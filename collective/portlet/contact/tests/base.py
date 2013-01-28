@@ -29,6 +29,9 @@ class IntegrationTestCase(unittest.TestCase):
         testing.setRoles(self.portal, testing.TEST_USER_ID, ['Member'])
         self.folder = self.portal['test-folder']
 
+    def setRoles(self, roles):
+        testing.setRoles(self.portal, testing.TEST_USER_ID, roles)
+
 
 class FunctionalTestCase(unittest.TestCase):
 

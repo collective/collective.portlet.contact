@@ -1,23 +1,28 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="collective.portlet.contact">
 
   <i18n:registerTranslations directory="locales" />
 
   <include package="plone.app.portlets" />
   <include package="plone.app.z3cform" />
+  <include package="Products.CMFCore" file="permissions.zcml"/>
   <include package=".browser" />
   <include package=".portlet" />
   <include file="upgrades.zcml" />
 
   <utility
     provides="zope.schema.interfaces.IVocabularyFactory"
-    component=".vocabularies.PortletContactUtilities"
+    component=".addressbook.AddressBooks"
     name="collective.portlet.contact.utilities"
     />
+
+  <adapter factory=".addressbook.AddressBook" />
 
   <!-- Register the installation GenericSetup extension profile -->
   <genericsetup:registerProfile
@@ -36,5 +41,12 @@
       description="collective.portlet.contact uninstall profile"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-	  
+
+  <!-- DUMMY utility and control-panel page -->
+  <include package=".dummy" />
+
+  <!-- LDAP utility and control-panel page -->
+  <include package=".ldap"
+           zcml:condition="installed ldap" />
+
 </configure>

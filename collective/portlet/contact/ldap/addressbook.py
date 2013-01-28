@@ -2,23 +2,29 @@
 
 import ldap
 
-from zope.interface import implements, classProvides
-
-from collective.portlet.contact.interfaces import IPortletContactUtility
-from collective.portlet.contact.utils import getPropertySheet, encode_email
-from collective.portlet.contact.browser.ldap.utils import LdapServer
+from zope import interface
+from zope import component
 from Products.CMFCore.utils import getToolByName
 
+from collective.portlet.contact.utils import encode_email
+from collective.portlet.contact.browser.ldap.utils import LdapServer
+from collective.portlet.contact.addressbook import IAddressBook
 
-class PortletContactLdap:
-    classProvides(IPortletContactUtility)
-    implements(IPortletContactUtility)
 
-    def _search(self, context, search_on='cn', query='', attrs=None, limit=10):
+class LDAPAddressBook(object):
+    interface.implements(IAddressBook)
+    component.adapts(interface.Interface)
+
+    def __init__(self, context):
+        self.context = context
+
+    def _search(self, search_on='cn', query='', attrs=None, limit=10):
+        context = self.context
         if attrs is None:
             attrs = ['uid', 'cn', 'mail']
         # connect to the LDAP server
-        props = getPropertySheet(context)
+        portal_properties = getToolByName(context, 'portal_properties')
+        props = getattr(portal_properties, 'portlet_contact_properties')
 
         if props.ldap_search_recursive:
             SCOPE = ldap.SCOPE_SUBTREE
@@ -43,13 +49,11 @@ class PortletContactLdap:
 
         return results
 
-    def search(self, context, q="", limit=10, search_on='cn', attrs=[],
-               format='ajax'):
+    def search(self, q="", limit=10, search_on='cn', attrs=[], format='ajax'):
         # Used by the autocomplete widget
         attrs.extend(['uid', 'cn', 'mail'])
         search_attr = list(set(attrs))
-        contacts = self._search(context,
-                                search_on=search_on,
+        contacts = self._search(search_on=search_on,
                                 query=q,
                                 attrs=search_attr,
                                 limit=limit)
@@ -69,11 +73,11 @@ class PortletContactLdap:
 
         return '\n'.join(results)
 
-    def getContactInfos(self, context, uniq_id):
+    def getContactInfos(self, uniq_id):
+        context = self.context
         # Used by the portlet
         urltool = getToolByName(context, 'portal_url')
-        contacts = self._search(context,
-                                search_on='uid',
+        contacts = self._search(search_on='uid',
                                 query=uniq_id,
                                 attrs=['uid', 'cn', 'mail', 'telephoneNumber',
                                        'employeeType'],
@@ -93,4 +97,4 @@ class PortletContactLdap:
         else:
             return None
 
-portletContactLdap = PortletContactLdap()
+ldap_addressbook = LDAPAddressBook()

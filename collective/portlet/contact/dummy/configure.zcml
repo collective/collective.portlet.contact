@@ -5,8 +5,8 @@
   i18n_domain="collective.portlet.contact">
 
   <!-- DUMMY utility -->
-  <utility
-     component=".utility.portletContactDummy"
+  <adapter
+     factory=".addressbook.DummyAddressBook"
      name="dummy" />
 
   <!-- DUMMY control-panel page

@@ -34,14 +34,6 @@
       class=".contact_view.ContactView"
       template="contact_view.pt"
     />
-
-  <!-- DUMMY utility and control-panel page -->
-  <include package=".dummy" />
-
-  <!-- LDAP utility and control-panel page -->
-  <include package=".ldap"
-           zcml:condition="installed ldap" />
-
   <configure zcml:condition="not-installed ldap">
     <browser:page
       name="collective_portlet_contact_photo"
@@ -56,5 +48,6 @@
       permission="cmf.ManagePortal"
     />
   </configure>
+
 </configure>
 

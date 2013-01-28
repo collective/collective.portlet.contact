@@ -5,8 +5,8 @@
   i18n_domain="collective.portlet.contact">
 
   <!-- LDAP utility -->
-  <utility
-     component=".utility.portletContactLdap"
+  <adapter
+     factory=".addressbook.LDAPAddressBook"
      name="ldap" />
 
   <!-- LDAP control-panel page

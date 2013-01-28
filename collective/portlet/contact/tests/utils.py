@@ -40,89 +40,31 @@ class FakeContext(object):
     def getPhysicalPath(self):
         return ('/', 'a', 'not', 'existing', 'path')
 
-    def getFolderContents(self, filter=None):
-        catalog = FakeCatalog()
-        return catalog.searchResults()
-
     def absolute_url(self):
         return "http://nohost.com/" + self.id
-
-    def queryCatalog(self, **kwargs):  # fake Topic
-        catalog = FakeCatalog()
-        return catalog.searchResults()
 
     def getRemoteUrl(self):  # fake Link
         return self.remoteUrl
 
 
-class FakeBrain(object):
-    def __init__(self):
-        self.Title = ""
-        self.Description = ""
-        self.getId = ""
-        self.EffectiveDate = ""
-        self.Subject = ['economie']
-        self.url = "http://myportal.com/"
-
-    def getURL(self):
-        return self.url
-
-    def getObject(self):
-        ob = FakeContext()
-        ob.title = self.Title
-
-        return ob
-
-
-class FakeCatalog(object):
-    def searchResults(self, **kwargs):
-        brain1 = FakeBrain()
-        brain1.Title = "My first news"
-        brain1.Subject.append("keyword1")
-        brain1.Subject.append("keyword2")
-        brain1.EffectiveDate = "2010-04-05"
-        brain1.url += "/my-first-news"
-        brain2 = FakeBrain()
-        brain2.Title = "A great news"
-        brain2.Description = "you will drink lots of beer"
-        brain2.Subject.append("keyword1")
-        brain2.Subject.append("keyword3")
-        brain2.EffectiveDate = "2011-04-05"
-        brain2.url += "/a-great-news"
-        return [brain1, brain2]
-
-    def modified(self):
-        return '654654654654'
-
-
-class FakePlonePortalState(object):
-    def __init__(self):
-        self.portal_title = "portal title"
-        self.lang = "fr"
-
-    def language(self):
-        return self.lang
-
-
-class FakeDexterityContext(FakeContext):
-
-    def __init__(self):
-        self.portal_type = 'News Item'
-        self.id = "myid"
-        self.title = "a title"
-        self.description = "a description"
-        self.creators = ["myself"]
-        self.date = "a date"
-        self.aq_inner = FakeAcquisition()
-        self.aq_inner.aq_explicit = self
-        self.context = self
-        self._modified = "modified date"
-
-    def _old_chooseName(self, name, instance):
-        return 'dex-title'
-
-
 class FakeSettings(object):
     def __init__(self):
-        self.portal_types = ['News Item']
-        self.keywords_mapping = []
+        self.backend = "test"
+        self.ajax = False
+        self.dummy_fullname = "Foo Bar"
+        self.dummy_phone = "+33 (0) 111 222 333"
+        self.dummy_mail = "foo@bar.co"
+        self.dummy_employee_type = "Developer"
+        photo = "++resource++collective-portlet-contact/defaultUser.png"
+        self.dummy_photo_url = photo
+
+
+class FakeBackend(object):
+    def __init__(self):
+        self.contacts = {}
+
+    def search(self, q="", limit=10):
+        return self.contacts.values()
+
+    def getContactInfos(self, uniq_id):
+        return self.contacts[uniq_id]

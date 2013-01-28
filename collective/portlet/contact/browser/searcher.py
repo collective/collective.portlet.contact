@@ -5,8 +5,7 @@ from AccessControl import Unauthorized
 from Products.Five import BrowserView
 from Products.CMFCore.permissions import ModifyPortalContent
 from Products.CMFCore.utils import getToolByName
-
-from collective.portlet.contact.utils import getPortletContactUtility
+from collective.portlet.contact.addressbook import IAddressBook
 
 
 class ContactSearchView(BrowserView):
@@ -19,12 +18,12 @@ class ContactSearchView(BrowserView):
 
     def search(self, q="", limit=10):
         """."""
-        context = self.context
         # I don't know why permission="cmf.ManagePortal" doesn't works
         # in configure.zcml for this browser view.
-        portal_membership = getToolByName(context, 'portal_membership')
-        if portal_membership.checkPermission(ModifyPortalContent, context):
-            utility = getPortletContactUtility(context)
-            return utility.search(context, q=q, limit=limit)
+        portal_membership = getToolByName(self.context, 'portal_membership')
+        hasPermission = portal_membership.checkPermission
+        if hasPermission(ModifyPortalContent, self.context):
+            book = IAddressBook(self.context)
+            return book.search(q=q, limit=limit)
         else:
             raise Unauthorized

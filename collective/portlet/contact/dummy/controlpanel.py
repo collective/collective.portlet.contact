@@ -17,6 +17,7 @@ except ImportError:
 
 from collective.portlet.contact.i18n import MessageFactory as _
 
+
 class IPortletContactDummyControlPanel(Interface):
 
     dummy_fullname = schema.ASCIILine(title=_(u'Full name'),
@@ -38,7 +39,8 @@ class IPortletContactDummyControlPanel(Interface):
     dummy_photo_url = schema.ASCIILine(title=_(u'Photo URL'),
                                      description=_(u''),
                                      required=False,)
-    
+
+
 class PortletContactDummyControlPanelAdapter(SchemaAdapterBase):
 
     adapts(IPloneSiteRoot)
@@ -48,36 +50,42 @@ class PortletContactDummyControlPanelAdapter(SchemaAdapterBase):
         super(PortletContactDummyControlPanelAdapter, self).__init__(context)
         portal_properties = getToolByName(self.context, 'portal_properties')
         self.props = getattr(portal_properties, 'portlet_contact_properties')
-        
+
     def setFullName(self, value):
         self.props.manage_changeProperties(dummy_fullname=value)
+
     def getFullName(self):
         return self.props.dummy_fullname
     dummy_fullname = property(getFullName, setFullName)
 
     def setPhone(self, value):
         self.props.manage_changeProperties(dummy_phone=value)
+
     def getPhone(self):
         return self.props.dummy_phone
     dummy_phone = property(getPhone, setPhone)
 
     def setMail(self, value):
         self.props.manage_changeProperties(dummy_mail=value)
+
     def getMail(self):
         return self.props.dummy_mail
     dummy_mail = property(getMail, setMail)
 
     def setEmployeeType(self, value):
         self.props.manage_changeProperties(dummy_employee_type=value)
+
     def getEmployeeType(self):
         return self.props.dummy_employee_type
     dummy_employee_type = property(getEmployeeType, setEmployeeType)
 
     def setPhotoURL(self, value):
         self.props.manage_changeProperties(dummy_photo_url=value)
+
     def getPhotoURL(self):
         return self.props.dummy_photo_url
     dummy_photo_url = property(getPhotoURL, setPhotoURL)
+
 
 class PortletContactDummyControlPanel(ControlPanelForm):
     """ collective.portlet.contact DUMMY Control Panel Form """
@@ -92,4 +100,3 @@ class PortletContactDummyControlPanel(ControlPanelForm):
     label = _(u'Portlet Contact: configure DUMMY settings')
     description = ''
     form_name = _(u'Configure DUMMY settings')
-

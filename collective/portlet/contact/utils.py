@@ -1,29 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from zope.component import queryUtility
-
-from Products.CMFCore.utils import getToolByName
-
-from collective.portlet.contact.interfaces import IPortletContactUtility
-
-
-def getPropertySheet(context):
-    portal_properties = getToolByName(context, 'portal_properties')
-    return getattr(portal_properties, 'portlet_contact_properties')
-
-
-def getPortletContactUtilityName(context):
-    """Return the selected contact utility name."""
-    return getPropertySheet(context).backend
-
-
-def getPortletContactUtility(context):
-    """Return the selected contact utility."""
-    return queryUtility(
-        IPortletContactUtility,
-        getPortletContactUtilityName(context)
-    )
-
 # Tool to avoid spam on emails
 # See http://www.zope.org/Members/jmeile/email_encoder
 

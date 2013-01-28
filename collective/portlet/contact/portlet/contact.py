@@ -12,10 +12,10 @@ from plone.portlets.interfaces import IPortletDataProvider, IPortletRetriever
 from plone.app.portlets.portlets import base
 
 from collective.portlet.contact.i18n import MessageFactory as _
-from collective.portlet.contact.utils import getPortletContactUtility
 
 from zope.app.form.browser.textwidgets import TextWidget
 from Products.CMFCore.utils import getToolByName
+from collective.portlet.contact.addressbook import IAddressBook
 PORTLET_PATH = "%(context_path)s/++%(category)sportlets++%(manager)s/%(id)s"
 
 
@@ -81,16 +81,30 @@ class Renderer(base.Renderer):
     of this class. Other methods can be added and referenced in the template.
     """
 
-    render = ViewPageTemplateFile('contact.pt')
+    index = ViewPageTemplateFile('contact.pt')
 
-    @memoize
+    def __init__(self, context, request, view, manager, data):
+        super(Renderer, self).__init__(context, request, view, manager, data)
+        self.addressbook = None
+        self.settings = None
+
+    def update(self):
+        if self.addressbook is None:
+            self.addressbook = IAddressBook(self.context)
+        if self.settings is None:
+            self.settings = self.addressbook.settings
+
+    def render(self):
+        self.update()
+        return self.index()
+
+#    @memoize
     def getContactInfo(self):
         """ get the contact informations the portlet is pointing to"""
         if self.load_ajax():
             return "ajax"  # not None
         uniq_id = self.data.contact_id
-        utility = getPortletContactUtility(self.context)
-        return utility.getContactInfos(self.context, uniq_id)
+        return self.addressbook.getContactInfos(uniq_id)
 
     def portlet_url(self):
         portlet_url = ""
@@ -123,9 +137,8 @@ class Renderer(base.Renderer):
 
     def load_ajax(self):
         """return True if the portlet should be load in ajax"""
-        pp = getToolByName(self.context, 'portal_properties')
-        if hasattr(pp.portlet_contact_properties, 'ajax'):
-            return pp.portlet_contact_properties.ajax
+        if hasattr(self.settings, 'ajax'):
+            return self.settings.ajax
         return False
 
 
