@@ -90,6 +90,7 @@ class Renderer(base.Renderer):
     def update(self):
         if self.addressbook is None:
             self.addressbook = IAddressBook(self.context)
+            self.addressbook.update()
         if self.settings is None:
             self.settings = self.addressbook.settings
 
