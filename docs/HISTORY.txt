@@ -4,7 +4,9 @@ Change History
 1.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Refactor to use adapter instead of utility. Welcome to addressbook component.
+- Add tests + travis-ci integration
+- Add ajax option for webservices backend like sugarcrm
 
 
 1.0 (2012-09-05)
