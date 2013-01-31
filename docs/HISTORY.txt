@@ -1,7 +1,7 @@
 Change History
 ==============
 
-1.1 (unreleased)
+1.1 (2013-01-31)
 ----------------
 
 - Refactor to use adapter instead of utility. Welcome to addressbook component.
