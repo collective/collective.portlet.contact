@@ -4,7 +4,7 @@ Change History
 1.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- fix AttributeError: 'Form' object has no attribute 'settings'
 
 
 1.1 (2013-01-31)

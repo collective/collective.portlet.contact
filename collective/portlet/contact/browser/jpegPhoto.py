@@ -201,8 +201,6 @@ class Form(form.Form):
         self.widgets['uid'].mode = HIDDEN_MODE
 
     def update(self):
-        super(Form, self).update()
-
         if not hasattr(self, 'settings'):
             self.settings = get_properties(self.context)
 
@@ -217,11 +215,9 @@ class Form(form.Form):
             config['user'] = pp.ldap_bind_dn
             config['password'] = pp.ldap_bind_password
             config['basedn'] = pp.ldap_search_base
-#            if pp.ldap_search_recursive:
-#                config['scope'] = ldap.SCOPE_SUBTREE
-#            else:
-#                config['scope'] = ldap.SCOPE_ONELEVEL
             self.config = config
+
+        super(Form, self).update()
 
 
 class Page(layout.FormWrapper):
