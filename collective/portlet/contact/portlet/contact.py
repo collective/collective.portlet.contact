@@ -4,7 +4,7 @@ from zope import component
 from zope import schema
 from zope.interface import implements
 from zope.formlib import form
-from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 
 #from plone.memoize.compress import xhtml_compress
 from plone.memoize.instance import memoize

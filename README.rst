@@ -12,11 +12,21 @@ You can configure this addon to use an other backend:
 * LDAP backend (add python-ldap in your setup)
 * SugarCRM backend (add the addon collective.sugarcrm)
 
-Installation
-============
+How to Install
+==============
 
-.. image:: https://secure.travis-ci.org/collective/collective.js.galleria.png
-    :target: http://travis-ci.org/collective/collective.js.galleria
+.. image:: https://pypip.in/v/collective.portlet.contact/badge.png
+    :target: https://crate.io/packages/collective.portlet.contact/
+
+.. image:: https://pypip.in/d/collective.portlet.contact/badge.png
+    :target: https://crate.io/packages/collective.portlet.contact/
+
+.. image:: https://secure.travis-ci.org/collective/collective.portlet.contact.png
+    :target: http://travis-ci.org/#!/collective/collective.portlet.contact
+
+.. image:: https://coveralls.io/repos/collective/collective.portlet.contact/badge.png?branch=master
+    :target: https://coveralls.io/r/collective/collective.portlet.contact
+
 
 This addon can be installed as installed as any other Plone addon, please
 follow the official documentation_.
