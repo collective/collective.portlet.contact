@@ -4,7 +4,7 @@ Change History
 1.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- fix plone4.0 compatibility
 
 
 1.1.1 (2013-12-09)
